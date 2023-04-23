@@ -52,8 +52,10 @@ public class Login extends AppCompatActivity {
                     String passwordis = password.getText().toString();
                     Log.d("MSG", "ID/PSW " + emailis + " " + passwordis);
 
-                    if (emailis.equals("") || passwordis.equals(""))
+                    if (emailis.equals("") || passwordis.equals("")){
                         Toast.makeText(Login.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();
+                        email.setError("Invalid email password");
+                        password.setError("Invalid email password");}
                     else {
                         Boolean checkemailpass = DB.checkemailpassword(emailis, passwordis);
                         if (checkemailpass == true) {
@@ -68,6 +70,10 @@ public class Login extends AppCompatActivity {
                             startActivity(intent);
                         } else {
                             Toast.makeText(Login.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                            email.setError("Invalid email password");
+                            password.setError("Invalid email password");
+
+
                         }
                     }
                 }

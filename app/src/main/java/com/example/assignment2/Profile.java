@@ -1,5 +1,7 @@
 package com.example.assignment2;
 
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -11,11 +13,15 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.service.controls.actions.FloatAction;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hbb20.CountryCodePicker;
 
@@ -31,11 +37,11 @@ public class Profile extends AppCompatActivity {
     private Button back, save;
     private EditText fullName, address, postcode, password, repassword, phoneNumber;
 
-    private FloatingActionButton saveImg;
+    private FloatingActionButton addImage;
+    private ImageView imgDisplay;
 
-    private static final int PICK_IMAGE_REQUEST = 1;
-    private static final int REQUEST_IMAGE_CAPTURE = 2;
-    private Uri mImageUri;
+    private String stringUri;
+
 
     //initialize database
     DbHelper DB;
@@ -59,7 +65,9 @@ public class Profile extends AppCompatActivity {
         password = findViewById(R.id.newregPassword);
         repassword = findViewById(R.id.newregrePassword);
         phoneNumber = findViewById(R.id.newregPhoneno);
-        saveImg = findViewById(R.id.floatingActionButton);
+        addImage = findViewById(R.id.floatingActionButton);
+        imgDisplay = findViewById(R.id.userimageview);
+
 
 
     }
@@ -76,17 +84,102 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Log.d("msg","heyy addressis "+ stringUri );
+
+
+
+                //
+                String code= countrycode.getSelectedCountryCode();
+                String countryis = countrycode.getSelectedCountryEnglishName();
+                String num =phoneNumber.getText().toString();
+                String phoneNumberis= phoneNumber.getText().toString();
+
+                String emailis = "a@bc.d";
+                String fullNameis = fullName.getText().toString().toUpperCase();
+                String addressis = address.getText().toString().toUpperCase();
+                String postcodeis = postcode.getText().toString().toUpperCase();
+
+                String passwordis = password.getText().toString();
+                String repasswordis = repassword.getText().toString();
+
+                Log.d("MGD", "emailis = " + emailis);
+                Log.d("MGD", "fullNameis = " + fullNameis);
+                Log.d("MGD", "addressis = " + addressis);
+                Log.d("MGD", "postcodeis = " + postcodeis);
+                Log.d("MGD", "phoneNumberis = " + phoneNumberis);
+                Log.d("MGD", "countryis = " + countryis);
+                Log.d("MGD", "passwordis = " + passwordis);
+                Log.d("MGD", "repasswordis = +" + repasswordis);
+
+
+                if (  passwordis.equals("")  || repasswordis.equals("") || postcodeis.equals("") || fullNameis.equals("") || addressis.equals("") || num.equals("")) {
+                    Toast.makeText(Profile.this, "Please fill all the fields with valid values", Toast.LENGTH_SHORT).show();
+
+                    if (passwordis.equals("")) {
+                        password.setError("Invalid password");
+                    }
+                    if (repasswordis.equals("")) {
+                        repassword.setError("Invalid Re-password");
+                    }
+                    if (postcodeis.equals("")) {
+                        postcode.setError("Invalid postcode");
+                    }
+                    if (fullNameis.equals("")) {
+                        fullName.setError("Invalid Name");
+                    }
+                    if (addressis.equals("")) {
+                        address.setError("Invalid address");
+                    }
+                    if (num.equals("")) {
+                        phoneNumber.setError("Invalid Phone Number");
+                    }
+                }
+                else {
+                    if (passwordis.equals(repasswordis)) {
+
+                        Boolean insert = DB.updateData(emailis, passwordis, countryis, fullNameis, addressis, postcodeis, phoneNumberis,stringUri);
+                        if (insert == true) {
+                            Toast.makeText(Profile.this, "Details Updated", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), Profile.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(Profile.this, "Error failed", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else {
+                        Toast.makeText(Profile.this, "Passwords not matching", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }
+
+                //
             }
         });
-        saveImg.setOnClickListener(new View.OnClickListener() {
+        addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                ImagePicker.with(Profile.this)
+                        .crop()	    			//Crop image(Optional), Check Customization for more option
+                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
 
 
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Uri uri= data.getData();
+        imgDisplay.setImageURI(uri);
+         stringUri = uri.toString();
+    }
+
     @Override
     public void onBackPressed() {
         //super.onBackPressed();

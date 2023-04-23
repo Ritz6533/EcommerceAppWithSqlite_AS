@@ -31,7 +31,7 @@ android {
 dependencies {
     //added lib
     implementation 'com.hbb20:ccp:2.6.1'
-
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
 
 
     implementation 'androidx.appcompat:appcompat:1.6.1'

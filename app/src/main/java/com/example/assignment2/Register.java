@@ -79,7 +79,7 @@ public class Register extends AppCompatActivity {
                     String code= countrycode.getSelectedCountryCode();
                     String countryis = countrycode.getSelectedCountryEnglishName();
                     String num =phoneNumber.getText().toString();
-                    phoneNumberFinal= code+phoneNumber.getText().toString();;
+                    phoneNumberFinal= phoneNumber.getText().toString();
 
                     String emailis = email.getText().toString().toLowerCase();
                     String fullNameis = fullName.getText().toString().toUpperCase();

@@ -7,6 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class DbHelper extends SQLiteOpenHelper {
 //creating the database for the list of user
     public static  final  String DBNAME = "DatabaseEcom.db";
@@ -18,7 +23,7 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase MyDB) {
         try {
-            MyDB.execSQL("CREATE TABLE userData (email TEXT PRIMARY KEY , password TEXT , country TEXT , fullname TEXT , address TEXT, postcode TEXT, phoneNumber TEXT, image_path TEXT, dateRegister TEXT DEFAULT (datetime('now')), dateUpdate TEXT DEFAULT (datetime('now')));");
+            MyDB.execSQL("CREATE TABLE userData (email TEXT PRIMARY KEY , password TEXT , country TEXT , fullname TEXT , address TEXT, postcode TEXT, phoneNumber TEXT, imagepath TEXT, dateRegister TEXT DEFAULT (datetime('now')), dateUpdate TEXT DEFAULT (datetime('now')));");
             MyDB.execSQL("CREATE TABLE product (product_id INTEGER PRIMARY KEY AUTOINCREMENT, productName TEXT NOT NULL, price TEXT NOT NULL, description TEXT NOT NULL, listprice TEXT NOT NULL, retailprice TEXT NOT NULL, image BLOB, productAddeddate TEXT DEFAULT (datetime('now')), productupdateddate TEXT DEFAULT (datetime('now')), category_id TEXT NOT NULL, FOREIGN KEY (category_id) REFERENCES category(category_id));");
             MyDB.execSQL("CREATE TABLE category (category_id INTEGER PRIMARY KEY AUTOINCREMENT, categoryName TEXT NOT NULL);");
             MyDB.execSQL("CREATE TABLE orders (order_id INTEGER PRIMARY KEY AUTOINCREMENT, orderDate TEXT DEFAULT (datetime('now')), email TEXT NOT NULL, FOREIGN KEY (email) REFERENCES userData(email) );");
@@ -33,6 +38,7 @@ public class DbHelper extends SQLiteOpenHelper {
             String address = "Northampton";
             String postcode = "NN32JW";
             String phoneNumber = "07436588420";
+            String newDate = "23-Apr-1999";
 
             ContentValues contentValues = new ContentValues();
             contentValues.put("email", email);
@@ -42,6 +48,9 @@ public class DbHelper extends SQLiteOpenHelper {
             contentValues.put("address", address);
             contentValues.put("postcode", postcode);
             contentValues.put("phoneNumber", phoneNumber);
+            contentValues.put("dateRegister", newDate);
+
+
 
 
 
@@ -69,6 +78,13 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public Boolean insertData(String email, String password, String country, String fullname, String address, String postcode, String phoneNumber){
+
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        String newDate = df.format(c);
+
         SQLiteDatabase MyDB = this. getWritableDatabase();
         ContentValues ContentValues= new ContentValues();
         ContentValues.put("email", email);
@@ -78,6 +94,7 @@ public class DbHelper extends SQLiteOpenHelper {
         ContentValues.put("address", address);
         ContentValues.put("postcode", postcode);
         ContentValues.put("phoneNumber", phoneNumber);
+        ContentValues.put("dateRegister", newDate);
 
 
         long result = MyDB.insert("userData", null, ContentValues);
@@ -131,11 +148,23 @@ public class DbHelper extends SQLiteOpenHelper {
 
         }
 
-
-
-
     }
+    public Boolean updateData(String email, String password, String country, String fullname, String address, String postcode, String phoneNumber, String imagepath){
+        SQLiteDatabase MyDB = this. getWritableDatabase();
+        ContentValues ContentValues= new ContentValues();
+        ContentValues.put("password", password);
+        ContentValues.put("country", country);
+        ContentValues.put("fullname", fullname);
+        ContentValues.put("address", address);
+        ContentValues.put("postcode", postcode);
+        ContentValues.put("phoneNumber", phoneNumber);
+        ContentValues.put("imagepath",imagepath);
+        long result= MyDB.update("userData", ContentValues, "email = ? ", new String[]{email});
 
+        if(result==-1) return false;
+        else
+            return true;
+    }
 
 }
 
