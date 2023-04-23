@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Assignment2</string>
+
+    <string name="login">LOGIN</string>
+    <string name="register">REGISTER</string>
+    <string name="password">Password</string>
+    <string name="rpassword">Re-password</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="dash">Welcome ADMIN</string>
+    <string name="desc">Welcome To The Student MULTI APP. Here you can use various types of tools and application to help with your student life.</string>
+    <string name="dice">CLICK The dice and roll it!! Maybe you get lucky and get 6 </string>
+    <string name="diceinf">Click the dice and get your score </string>
+    <string name="submit">Submit</string>
+    <string name="save">SAVE</string>
+    <string name="address">Address</string>
+    <string name="phone">Phone No</string>
+    <string name="view">VIEW</string>
+    <string name="exit">EXIT</string>
+    <string name="fname">Full Name</string>
+    <string name="title">THE SHOPPY APP</string>
+    <string name="update">Update</string>
+
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="postcode">Post Code</string>
+    <string name="delete">DELETE</string>
+    <string name="back">BACK</string>
+    <string name="notepad">MY NOTEPAD</string>
+    <string name="copyright">Copyright ©2023 The HSETIR</string>
+
+
+</resources>
