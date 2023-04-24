@@ -109,43 +109,58 @@ public class DbHelper extends SQLiteOpenHelper {
     public Boolean checkemail(String email) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from userData where email = ?", new String[]{email});
-        if (cursor.getCount() > 0)
-            //if user exist return true
-            return true;
-        else
-            return false;
+        try{
+            if (cursor.getCount() > 0)
+                //if user exist return true
+                return true;
+            else
+                return false;
+        }
+        finally {
+            cursor.close();
+        }
+
     }
 
     public Boolean checkemailpassword(String email, String password){
         SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from userData where email = ? and password = ?", new String[] {email,password});
-        if(cursor.getCount()>0)
+        try{
+            if(cursor.getCount()>0)
 
-            return true;
-        else
-            return false;
-
+                return true;
+            else
+                return false;
+        }
+        finally {
+            cursor.close();
+        }
 
     }
 
     public Boolean insertcategory(String categoryName){
         SQLiteDatabase MyDB = this. getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from category where categoryName = ?", new String[]{categoryName});
-        if (cursor.getCount() > 0)
-            //if user exist return true
-            return false;
-        else{
-            ContentValues ContentValues= new ContentValues();
+        try{
+            if (cursor.getCount() > 0)
+                //if user exist return true
+                return false;
+            else{
+                ContentValues ContentValues= new ContentValues();
 
-            ContentValues.put("categoryName", categoryName);
-
-
-            long result = MyDB.insert("category", null, ContentValues);
-            if(result==-1) return false;
-            else
-                return true;
+                ContentValues.put("categoryName", categoryName);
 
 
+                long result = MyDB.insert("category", null, ContentValues);
+                if(result==-1) return false;
+                else
+                    return true;
+
+
+            }
+        }
+        finally {
+            cursor.close();
         }
 
     }
@@ -165,6 +180,15 @@ public class DbHelper extends SQLiteOpenHelper {
         else
             return true;
     }
+    public Cursor getUserDataById(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = { "email", "password", "country", "fullname", "address", "postcode", "phoneNumber", "imagepath", "dateUpdate" };
+        String selection = "email = ?";
+        String[] selectionArgs = { email };
+        Cursor cursor = db.query("userData", projection, selection, selectionArgs, null, null, null);
+        return cursor;
+    }
+
 
 }
 

@@ -268,6 +268,27 @@
                 app:layout_constraintStart_toEndOf="@+id/userimageview"
                 app:layout_constraintTop_toBottomOf="@+id/userimageview"
                 app:srcCompat="@android:drawable/ic_input_add" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginBottom="20dp"
+                android:text="Last Updated on :"
+                app:layout_constraintBottom_toTopOf="@+id/xtextViews"
+                app:layout_constraintEnd_toStartOf="@+id/updatedateis"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/updatedateis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="20dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toTopOf="@+id/xtextViews"
+                app:layout_constraintStart_toEndOf="@+id/textView4" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

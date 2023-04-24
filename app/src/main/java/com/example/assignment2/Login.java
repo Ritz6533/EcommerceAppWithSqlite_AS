@@ -61,8 +61,8 @@ public class Login extends AppCompatActivity {
                         if (checkemailpass == true) {
                             Toast.makeText(Login.this, "Sign in successfull", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), Profile.class);
-                            intent.putExtra("USER_ID", emailis);
-                            intent.putExtra("login", true);
+                            intent.putExtra("emailkey", emailis);
+
                             //clear any activity infront of login ex. register so that it cannot come back from dashboard on back click
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             Log.d("user id is passed", "the user id is " + emailis);

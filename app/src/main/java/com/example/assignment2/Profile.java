@@ -8,6 +8,7 @@ import androidx.core.content.FileProvider;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -33,7 +34,7 @@ import java.util.Date;
 public class Profile extends AppCompatActivity {
 
     private CountryCodePicker countrycode;
-    private TextView email;
+    private TextView email, updatedDate;
     private Button back, save;
     private EditText fullName, address, postcode, password, repassword, phoneNumber;
 
@@ -42,8 +43,6 @@ public class Profile extends AppCompatActivity {
 
     private String stringUri;
 
-
-    //initialize database
     DbHelper DB;
 
     @Override
@@ -52,6 +51,51 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         initaliseViewProfile();
         initaliseonclicklisteners();
+        DB = new DbHelper(this);
+        String emailkey = getIntent().getStringExtra("emailkey");
+        Cursor cursor = DB.getUserDataById(emailkey);
+
+// iterate through the cursor and display the data in your UI
+        while (cursor.moveToNext()) {
+            String getemail = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+            email.setText(getemail);
+
+            String getpassword = cursor.getString(cursor.getColumnIndexOrThrow("password"));
+            password.setText(getpassword);
+
+            String getcountry = cursor.getString(cursor.getColumnIndexOrThrow("country"));
+            //countrycode
+
+            String getfullname = cursor.getString(cursor.getColumnIndexOrThrow("fullname"));
+            fullName.setText(getfullname);
+
+            String getaddress = cursor.getString(cursor.getColumnIndexOrThrow("address"));
+            address.setText(getaddress);
+
+            String getpostcode = cursor.getString(cursor.getColumnIndexOrThrow("postcode"));
+            postcode.setText(getpostcode);
+
+            String getphoneNumber = cursor.getString(cursor.getColumnIndexOrThrow("phoneNumber"));
+            phoneNumber.setText(getphoneNumber);
+
+            String getimagepath = cursor.getString(cursor.getColumnIndexOrThrow("imagepath"));
+            //  Convert the Uri string back to a Uri object
+            try{
+                Uri uriImg = Uri.parse(getimagepath);
+            imgDisplay.setImageURI(uriImg);
+        } catch (Exception e) {
+                e.printStackTrace();
+        }
+
+
+            String getdateUpdated = cursor.getString(cursor.getColumnIndexOrThrow("dateUpdate"));
+            updatedDate.setText(getdateUpdated);
+        }
+
+
+
+
+
     }
 
     private void initaliseViewProfile() {
@@ -67,6 +111,7 @@ public class Profile extends AppCompatActivity {
         phoneNumber = findViewById(R.id.newregPhoneno);
         addImage = findViewById(R.id.floatingActionButton);
         imgDisplay = findViewById(R.id.userimageview);
+        updatedDate = findViewById(R.id.updatedateis);
 
 
 
@@ -109,7 +154,8 @@ public class Profile extends AppCompatActivity {
                 Log.d("MGD", "phoneNumberis = " + phoneNumberis);
                 Log.d("MGD", "countryis = " + countryis);
                 Log.d("MGD", "passwordis = " + passwordis);
-                Log.d("MGD", "repasswordis = +" + repasswordis);
+                Log.d("MGD", "repasswordis = " + repasswordis);
+                Log.d("MGD", "stringUri = " + stringUri);
 
 
                 if (  passwordis.equals("")  || repasswordis.equals("") || postcodeis.equals("") || fullNameis.equals("") || addressis.equals("") || num.equals("")) {
