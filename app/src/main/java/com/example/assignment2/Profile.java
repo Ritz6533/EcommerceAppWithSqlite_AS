@@ -41,7 +41,7 @@ public class Profile extends AppCompatActivity {
     private FloatingActionButton addImage;
     private ImageView imgDisplay;
 
-    private String stringUri;
+    private String stringUri, emailkey;
 
     DbHelper DB;
 
@@ -49,10 +49,18 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        SessionManager sessionManager = new SessionManager(this);
+
+        if (sessionManager.isLoggedIn()) {
+             emailkey = sessionManager.sharedPreferences.getString("emailkey", "");
+
+        }
+
         initaliseViewProfile();
         initaliseonclicklisteners();
         DB = new DbHelper(this);
-        String emailkey = getIntent().getStringExtra("emailkey");
+
         Cursor cursor = DB.getUserDataById(emailkey);
 
 // iterate through the cursor and display the data in your UI
