@@ -16,7 +16,7 @@ tools:context=".Shop">
     android:layout_gravity="start"
     android:background="@color/white"
     app:headerLayout="@layout/nav_header"
-    app:menu="@menu/main_menu" />
+    app:menu="@menu/userlogged_menu" />
 
 <LinearLayout
     android:id="@+id/content"

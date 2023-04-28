@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_shop"
+            android:title="@string/shop"
+            android:icon="@drawable/shop"/>
+        <item
+            android:id="@+id/nav_profile"
+            android:title="@string/profile"
+            android:icon="@drawable/profile"/>
+        <item
+            android:id="@+id/nav_all_notification"
+            android:title="@string/notification"
+            android:icon="@drawable/notification"/>
+
+    </group>
+
+    <item android:title="@string/Myshoppy">
+        <menu>
+
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_category"
+                    android:title="Category"
+                    android:icon="@drawable/favourite"/>
+                <item
+                    android:id="@+id/nav_order_List"
+                    android:title="Order List"
+                    android:icon="@drawable/orderhistory"/>
+                <item
+                    android:id="@+id/nav_products"
+                    android:title="Products"
+                    android:icon="@drawable/cart"/>
+            </group>
+
+        </menu>
+    </item>
+
+    <item android:title="@string/extras">
+        <menu>
+
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_about_us"
+                    android:title="@string/about"
+                    android:icon="@drawable/aboutus"/>
+                <item
+                    android:id="@+id/nav_faq"
+                    android:title="@string/faq"
+                    android:icon="@drawable/faq"/>
+                <item
+                    android:id="@+id/nav_logout"
+                    android:title="@string/logout"
+                    android:icon="@drawable/logout"/>
+                <item
+                    android:id="@+id/nav_exit"
+                    android:title="@string/exit"
+                    android:icon="@drawable/exit"/>
+            </group>
+
+        </menu>
+    </item>
+
+
+</menu>

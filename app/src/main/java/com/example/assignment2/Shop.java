@@ -17,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -36,6 +37,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
     String TheChannelName = "ce";
     String Descriptionis = "a";
     int notificationid = 0;
+    String emailkey= "000";
     ImageView menuIcon;
     LinearLayout contentView;
 
@@ -48,6 +50,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_shop);
+        DB = new DbHelper(this);
 
         //Hooks
         menuIcon = findViewById(R.id.menu_icon);
@@ -57,9 +60,9 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
 
-        naviagtionDrawer();
+        setupNavigationDrawer(emailkey);
 
-        DB = new DbHelper(this);
+
 
 
         s = findViewById(R.id.s);
@@ -72,13 +75,11 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
                 Log.d("RUN ", "Activity Started ");
             }
         });
-        boolean login = true;
 
-        if (login = true) {
+
+        if (!emailkey.equals("000"))
             notificationadd();
-        } else {
-            Log.d("MSG ", "No LoggedIn ");
-        }
+
 
     }
 
@@ -103,11 +104,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
             return;
         }
         notificationManager.notify(notificationid, builder.build());
@@ -133,24 +130,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
 
-    private void naviagtionDrawer() {
 
-        //Naviagtion Drawer
-        navigationView.bringToFront();
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.nav_shop);
-
-        menuIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (drawerLayout.isDrawerVisible(GravityCompat.START))
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                else drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-
-
-    }
 
 
     @Override
@@ -162,6 +142,39 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
             super.onBackPressed();
     }
 
+    private void setupNavigationDrawer(String userType) {
+        // Get the navigation menu
+        Menu menu = navigationView.getMenu();
+
+        // Clear the existing menu items
+        menu.clear();
+
+        // Inflate the appropriate menu based on the user type
+        if (userType.equals("root")) {
+            navigationView.inflateMenu(R.menu.admin_navigation_menu);
+        } else if(userType.equals("000")) {
+            navigationView.inflateMenu(R.menu.def_navigation_menu);
+        }
+        else {
+            navigationView.inflateMenu(R.menu.userlogged_menu);
+        }
+
+        // Set the item selection listener
+        navigationView.setNavigationItemSelectedListener(this);
+
+        // Set the default checked item
+        navigationView.setCheckedItem(R.id.nav_shop);
+        menuIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (drawerLayout.isDrawerVisible(GravityCompat.START))
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                else drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+    }
+
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -169,13 +182,42 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
                 case R.id.nav_shop:
                     onBackPressed();
                     break;
-                case R.id.nav_logout:
-                    Intent intent = new Intent(Shop.this, Login.class);
-                    startActivity(intent);
                 case R.id.nav_profile:
+                    Intent intent = new Intent(Shop.this, Profile.class);
+                    startActivity(intent);
+                case R.id.nav_all_notification:
                     Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
+                case R.id.nav_liked_Items:
 
-                //creating the onclick action for the nav menu
+                    break;
+                case R.id.nav_order_history:
+                    Intent orderhistory = new Intent(Shop.this, Login.class);
+                    startActivity(orderhistory);
+                case R.id.nav_cart:
+                    Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
+                case R.id.nav_about_us:
+                    Intent about = new Intent(Shop.this, Login.class);
+                    startActivity(about);
+                    case R.id.nav_faq:
+
+                    break;
+                case R.id.nav_logout:
+                    break;
+                case R.id.nav_exit:
+                    break;//
+                case R.id.nav_login:
+                    Intent login = new Intent(Shop.this, Login.class);
+                    startActivity(login);
+                    case R.id.nav_category:
+
+                    break;
+                case R.id.nav_order_List:
+                    Intent orderListAdmin = new Intent(Shop.this, Login.class);
+                    startActivity(orderListAdmin);
+                case R.id.nav_products:
+                    Intent productListAdmin = new Intent(Shop.this, Login.class);
+                    startActivity(productListAdmin);
+                    //creating the onclick action for the nav menu
             }
             return true;
 
