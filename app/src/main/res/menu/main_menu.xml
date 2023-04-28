@@ -4,60 +4,60 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_shop"
-            android:title="Shop"
-            android:icon="@drawable/dashboard_icon"/>
+            android:title="@string/shop"
+            android:icon="@drawable/shop"/>
         <item
             android:id="@+id/nav_profile"
-            android:title="profile"
-            android:icon="@drawable/menu_search_icon"/>
+            android:title="@string/profile"
+            android:icon="@drawable/profile"/>
         <item
             android:id="@+id/nav_all_notification"
-            android:title="notification"
-            android:icon="@drawable/menu_categories_icon"/>
+            android:title="@string/notification"
+            android:icon="@drawable/notification"/>
 
     </group>
 
-    <item android:title="My Shoppy">
+    <item android:title="@string/Myshoppy">
         <menu>
 
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_liked_Items"
-                    android:title="Favourite Items"
-                    android:icon="@drawable/menu_login_icon"/>
+                    android:title="@string/favitem"
+                    android:icon="@drawable/favourite"/>
                 <item
                     android:id="@+id/nav_order_history"
-                    android:title="Order History"
-                    android:icon="@drawable/menu_profile_icon"/>
+                    android:title="@string/OrderHis"
+                    android:icon="@drawable/orderhistory"/>
                 <item
-                    android:id="@+id/nav_logout"
-                    android:title="logout"
-                    android:icon="@drawable/menu_logout_icon"/>
+                    android:id="@+id/nav_cart"
+                    android:title="@string/cart"
+                    android:icon="@drawable/cart"/>
             </group>
 
         </menu>
     </item>
 
-    <item android:title="Extras">
+    <item android:title="@string/extras">
         <menu>
 
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_about_us"
-                    android:title="About Us"
-                    android:icon="@drawable/restaurant_icon"/>
+                    android:title="@string/about"
+                    android:icon="@drawable/aboutus"/>
                 <item
-                    android:id="@+id/nav_help"
-                    android:title="FAQ Help"
-                    android:icon="@drawable/bank_icon"/>
+                    android:id="@+id/nav_faq"
+                    android:title="@string/faq"
+                    android:icon="@drawable/faq"/>
                 <item
-                    android:id="@+id/nav_education"
-                    android:title="LOGOUT"
-                    android:icon="@drawable/school_icon"/>
+                    android:id="@+id/nav_logout"
+                    android:title="@string/logout"
+                    android:icon="@drawable/logout"/>
                 <item
                     android:id="@+id/nav_exit"
                     android:title="@string/exit"
-                    android:icon="@drawable/shop_icon"/>
+                    android:icon="@drawable/exit"/>
             </group>
 
         </menu>

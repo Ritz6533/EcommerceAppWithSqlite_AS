@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Assignment2</string>
 
-    <string name="login">LOGIN</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="register">REGISTER</string>
     <string name="password">Password</string>
     <string name="rpassword">Re-password</string>
@@ -16,7 +17,7 @@
     <string name="address">Address</string>
     <string name="phone">Phone No</string>
     <string name="view">VIEW</string>
-    <string name="exit">EXIT</string>
+    <string name="exit">Exit</string>
     <string name="fname">Full Name</string>
     <string name="title">THE SHOPPY APP</string>
     <string name="update">Update</string>
@@ -28,6 +29,22 @@
     <string name="back">BACK</string>
     <string name="notepad">MY NOTEPAD</string>
     <string name="copyright">Copyright ©2023 The HSETIR</string>
+
+    <string name="shop">Shop</string>
+    <string name="cart">Cart</string>
+    <string name="profile">Profile</string>
+    <string name="notification">Notification</string>
+    <string name="favitem">Favourite Items</string>
+    <string name="OrderHis">Order History</string>
+    <string name="about">About Us</string>
+    <string name="faq">FAQ Help</string>
+    <string name="extras">Extras</string>
+    <string name="Myshoppy">MY Shoppy</string>
+
+
+
+
+
 
 
 </resources>
