@@ -16,7 +16,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +31,6 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
 
     DbHelper DB;
 
-    Button s;
     String TheChannelID = "channel id";
     String TheChannelName = "ce";
     String Descriptionis = "a";
@@ -44,6 +42,8 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
     //Drawer Menu
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+
+    Button s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,25 +60,29 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
 
+        SessionManager sessionManager = new SessionManager(this);
+
+        if (sessionManager.isLoggedIn()) {
+            emailkey = sessionManager.sharedPreferences.getString("emailkey", "000");
+
+        }
+        emailkey= "000";
         setupNavigationDrawer(emailkey);
 
 
 
+        if (!emailkey.equals("000"))
+            notificationadd();
 
-        s = findViewById(R.id.s);
+        s=findViewById(R.id.s);
         s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-
-                startActivity(intent);
-                Log.d("RUN ", "Activity Started ");
+                Intent x = new Intent(Shop.this, Category.class);
+                startActivity(x);
             }
         });
 
-
-        if (!emailkey.equals("000"))
-            notificationadd();
 
 
     }
@@ -91,11 +95,11 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, TheChannelID)
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.drawable.logobk)
                 .setContentTitle("WELCOME TO SHOPPY APP")
                 .setContentText("")
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(" THE USER DETAILS IS "))
+                        .bigText(" Hello!! ID- "+emailkey))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent);
 
@@ -104,7 +108,11 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
-
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         notificationManager.notify(notificationid, builder.build());
@@ -142,28 +150,100 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
             super.onBackPressed();
     }
 
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.nav_shop:
+                Toast.makeText(Shop.this, "Clicked the shop", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+                break;
+            case R.id.nav_profile:
+                Intent intentx = new Intent(getApplicationContext(),Profile.class);
+                startActivity(intentx);
+                break;
+            case R.id.nav_all_notification:
+                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_liked_Items:
+                // Handle this case
+                break;
+            case R.id.nav_order_history:
+                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_cart:
+                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_about_us:
+                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_faq:
+                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();                break;
+            case R.id.nav_exit:
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
+                break;
+            case R.id.nav_login:
+                Intent login = new Intent(Shop.this, Login.class);
+                startActivity(login);
+                break;
+            case R.id.nav_register:
+                Intent reg = new Intent(Shop.this, Register.class);
+                startActivity(reg);
+                break;
+            case R.id.nav_logout:
+                Intent logout = new Intent(Shop.this, Shop.class);
+                startActivity(logout);
+                finishAffinity();
+                System.exit(0);
+                break;
+            case R.id.nav_category:
+                Intent category = new Intent(Shop.this, Category.class);
+                startActivity(category);
+                break;
+            case R.id.nav_order_List:
+                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
+
+                break;
+            case R.id.nav_products:
+                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
+
+                break;
+        }
+        return true;
+    }
+
     private void setupNavigationDrawer(String userType) {
-        // Get the navigation menu
+
         Menu menu = navigationView.getMenu();
 
         // Clear the existing menu items
         menu.clear();
-
+        menu.close();
         // Inflate the appropriate menu based on the user type
         if (userType.equals("root")) {
-            navigationView.inflateMenu(R.menu.admin_navigation_menu);
+            navigationView.inflateMenu(R.menu.admin_navigation_menu);        menu.close();
+
         } else if(userType.equals("000")) {
-            navigationView.inflateMenu(R.menu.def_navigation_menu);
+            navigationView.inflateMenu(R.menu.def_navigation_menu);        menu.close();
+
+        } else {
+            navigationView.inflateMenu(R.menu.userlogged_menu);        menu.close();
+
         }
-        else {
-            navigationView.inflateMenu(R.menu.userlogged_menu);
-        }
+        //menu.close();
+
+
+        //navigationView.setVisibility(View.VISIBLE);
+        navigationView.bringToFront();
 
         // Set the item selection listener
         navigationView.setNavigationItemSelectedListener(this);
 
         // Set the default checked item
         navigationView.setCheckedItem(R.id.nav_shop);
+
         menuIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -175,51 +255,5 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-            switch (item.getItemId()) {
-                case R.id.nav_shop:
-                    onBackPressed();
-                    break;
-                case R.id.nav_profile:
-                    Intent intent = new Intent(Shop.this, Profile.class);
-                    startActivity(intent);
-                case R.id.nav_all_notification:
-                    Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
-                case R.id.nav_liked_Items:
-
-                    break;
-                case R.id.nav_order_history:
-                    Intent orderhistory = new Intent(Shop.this, Login.class);
-                    startActivity(orderhistory);
-                case R.id.nav_cart:
-                    Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
-                case R.id.nav_about_us:
-                    Intent about = new Intent(Shop.this, Login.class);
-                    startActivity(about);
-                    case R.id.nav_faq:
-
-                    break;
-                case R.id.nav_logout:
-                    break;
-                case R.id.nav_exit:
-                    break;//
-                case R.id.nav_login:
-                    Intent login = new Intent(Shop.this, Login.class);
-                    startActivity(login);
-                    case R.id.nav_category:
-
-                    break;
-                case R.id.nav_order_List:
-                    Intent orderListAdmin = new Intent(Shop.this, Login.class);
-                    startActivity(orderListAdmin);
-                case R.id.nav_products:
-                    Intent productListAdmin = new Intent(Shop.this, Login.class);
-                    startActivity(productListAdmin);
-                    //creating the onclick action for the nav menu
-            }
-            return true;
-
-    }
 }

@@ -61,6 +61,7 @@ public class Profile extends AppCompatActivity {
         initaliseonclicklisteners();
         DB = new DbHelper(this);
 
+
         Cursor cursor = DB.getUserDataById(emailkey);
 
 // iterate through the cursor and display the data in your UI
@@ -128,7 +129,8 @@ public class Profile extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Intent intent = new Intent(getApplicationContext(), Shop.class);
+                startActivity(intent);
 
             }
         });
@@ -194,7 +196,7 @@ public class Profile extends AppCompatActivity {
                         Boolean insert = DB.updateData(emailis, passwordis, countryis, fullNameis, addressis, postcodeis, phoneNumberis,stringUri);
                         if (insert == true) {
                             Toast.makeText(Profile.this, "Details Updated", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), Profile.class);
+                            Intent intent = new Intent(getApplicationContext(), Shop.class);
                             startActivity(intent);
                         } else {
                             Toast.makeText(Profile.this, "Error failed", Toast.LENGTH_SHORT).show();
@@ -232,12 +234,6 @@ public class Profile extends AppCompatActivity {
         Uri uri= data.getData();
         imgDisplay.setImageURI(uri);
          stringUri = uri.toString();
-    }
-
-    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-        moveTaskToBack(true);
     }
 
 

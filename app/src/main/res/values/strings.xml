@@ -3,7 +3,7 @@
 
     <string name="login">Login</string>
     <string name="logout">Logout</string>
-    <string name="register">REGISTER</string>
+    <string name="register">Register</string>
     <string name="password">Password</string>
     <string name="rpassword">Re-password</string>
     <string name="username">Username</string>
@@ -43,10 +43,8 @@
     <string name="welcome">Welcome!!</string>
     <string name="defuser">MY SHOPIFY APP</string>
     <string name="defemail">Hello! new user? Login and start shopping.</string>
-
-
-
-
+    <string name="category">Category</string>
+    <string name="order_list">Order List</string>
 
 
 </resources>

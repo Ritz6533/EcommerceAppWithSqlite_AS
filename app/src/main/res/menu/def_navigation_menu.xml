@@ -18,6 +18,10 @@
                     android:id="@+id/nav_login"
                     android:title="@string/login"
                     android:icon="@drawable/logout"/>
+                <item
+                    android:id="@+id/nav_register"
+                    android:title="@string/register"
+                    android:icon="@drawable/register"/>
             </group>
 
         </menu>
