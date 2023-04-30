@@ -5,34 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#6200EB"
-    tools:context=".Category">
+    tools:context=".Products">
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/textView120"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:text="@string/my_category"
+        android:text="@string/product_list"
         android:textAlignment="center"
         android:textColor="#FEFEFE"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/scrollView20"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#6200EB"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12">
+        app:layout_constraintTop_toBottomOf="@+id/textView120">
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleViewCategory"
+            android:id="@+id/recycleViewProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -44,8 +44,9 @@
     </ScrollView>
 
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addCategorybtn"
+        android:id="@+id/addProductbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -61,8 +62,7 @@
         app:layout_constraintVertical_bias="0.92"
         app:maxImageSize="35dp"
         app:srcCompat="@drawable/add_circle_24"
-        android:focusable="true"
-        android:contentDescription="@string/add" />
+        android:focusable="true" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

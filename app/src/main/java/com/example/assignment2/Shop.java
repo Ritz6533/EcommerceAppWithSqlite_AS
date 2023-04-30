@@ -1,6 +1,7 @@
 package com.example.assignment2;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -19,6 +20,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -50,6 +52,8 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_shop);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         DB = new DbHelper(this);
 
         //Hooks
@@ -83,6 +87,13 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
             }
         });
 
+
+        DB.insertcategory("category9");
+        DB.insertcategory("category10");
+        DB.insertcategory("category11");
+        DB.insertcategory("category12");
+        DB.insertcategory("category13");
+        DB.insertcategory("category14");
 
 
     }

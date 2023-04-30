@@ -13,8 +13,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class DbHelper extends SQLiteOpenHelper {
-//creating the database for the list of user
-    public static  final  String DBNAME = "DatabaseEcom.db";
+    //creating the database for the list of user
+    public static final String DBNAME = "DatabaseEcom.db";
 
     public DbHelper(Context context) {
         super(context, "DatabaseEcom.db", null, 1);
@@ -51,10 +51,6 @@ public class DbHelper extends SQLiteOpenHelper {
             contentValues.put("dateRegister", newDate);
 
 
-
-
-
-
             long result = MyDB.insert("userData", null, contentValues);
 
             Log.d("database", "added tables and default admin user");
@@ -62,22 +58,20 @@ public class DbHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             Log.e("database", "error creating tables", e);
         }
+
     }
-
-
-
 
 
     @Override
     public void onUpgrade(SQLiteDatabase MyDB, int i, int i1) {
 
-       MyDB.execSQL( "drop  Table  if  exists userData");
-        MyDB.execSQL( "drop  Table  if  exists product");
+        MyDB.execSQL("drop  Table  if  exists userData");
+        MyDB.execSQL("drop  Table  if  exists product");
 
 
     }
 
-    public Boolean insertData(String email, String password, String country, String fullname, String address, String postcode, String phoneNumber){
+    public Boolean insertData(String email, String password, String country, String fullname, String address, String postcode, String phoneNumber) {
 
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
@@ -85,8 +79,8 @@ public class DbHelper extends SQLiteOpenHelper {
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         String newDate = df.format(c);
 
-        SQLiteDatabase MyDB = this. getWritableDatabase();
-        ContentValues ContentValues= new ContentValues();
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues ContentValues = new ContentValues();
         ContentValues.put("email", email);
         ContentValues.put("password", password);
         ContentValues.put("country", country);
@@ -99,7 +93,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         long result = MyDB.insert("userData", null, ContentValues);
 
-        if(result==-1) return false;
+        if (result == -1) return false;
         else
             return true;
 
@@ -109,85 +103,93 @@ public class DbHelper extends SQLiteOpenHelper {
     public Boolean checkemail(String email) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from userData where email = ?", new String[]{email});
-        try{
+        try {
             if (cursor.getCount() > 0)
                 //if user exist return true
                 return true;
             else
                 return false;
-        }
-        finally {
+        } finally {
             cursor.close();
         }
 
     }
 
-    public Boolean checkemailpassword(String email, String password){
+    public Boolean checkemailpassword(String email, String password) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
-        Cursor cursor = MyDB.rawQuery("Select * from userData where email = ? and password = ?", new String[] {email,password});
-        try{
-            if(cursor.getCount()>0)
+        Cursor cursor = MyDB.rawQuery("Select * from userData where email = ? and password = ?", new String[]{email, password});
+        try {
+            if (cursor.getCount() > 0)
 
                 return true;
             else
                 return false;
-        }
-        finally {
+        } finally {
             cursor.close();
         }
 
     }
 
-    public Boolean insertcategory(String categoryName){
-        SQLiteDatabase MyDB = this. getWritableDatabase();
+    public Boolean insertcategory(String categoryName) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from category where categoryName = ?", new String[]{categoryName});
-        try{
+        try {
             if (cursor.getCount() > 0)
                 //if user exist return true
                 return false;
-            else{
-                ContentValues ContentValues= new ContentValues();
+            else {
+                ContentValues ContentValues = new ContentValues();
 
                 ContentValues.put("categoryName", categoryName);
 
 
                 long result = MyDB.insert("category", null, ContentValues);
-                if(result==-1) return false;
+                if (result == -1) return false;
                 else
                     return true;
 
 
             }
-        }
-        finally {
+        } finally {
             cursor.close();
         }
 
     }
-    public Boolean updateData(String email, String password, String country, String fullname, String address, String postcode, String phoneNumber, String imagepath){
-        SQLiteDatabase MyDB = this. getWritableDatabase();
-        ContentValues ContentValues= new ContentValues();
+
+    public Boolean updateData(String email, String password, String country, String fullname, String address, String postcode, String phoneNumber, String imagepath) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues ContentValues = new ContentValues();
         ContentValues.put("password", password);
         ContentValues.put("country", country);
         ContentValues.put("fullname", fullname);
         ContentValues.put("address", address);
         ContentValues.put("postcode", postcode);
         ContentValues.put("phoneNumber", phoneNumber);
-        ContentValues.put("imagepath",imagepath);
-        long result= MyDB.update("userData", ContentValues, "email = ? ", new String[]{email});
+        ContentValues.put("imagepath", imagepath);
+        long result = MyDB.update("userData", ContentValues, "email = ? ", new String[]{email});
 
-        if(result==-1) return false;
+        if (result == -1) return false;
         else
             return true;
     }
+
     public Cursor getUserDataById(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = { "email", "password", "country", "fullname", "address", "postcode", "phoneNumber", "imagepath", "dateUpdate" };
+        String[] projection = {"email", "password", "country", "fullname", "address", "postcode", "phoneNumber", "imagepath", "dateUpdate"};
         String selection = "email = ?";
-        String[] selectionArgs = { email };
+        String[] selectionArgs = {email};
         Cursor cursor = db.query("userData", projection, selection, selectionArgs, null, null, null);
         return cursor;
     }
+
+    public Cursor getAllCategories() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = { "category_id", "categoryName" };
+        Cursor cursor = db.query("category", projection, null, null, null, null, null);
+        return cursor;
+    }
+
+
 
 
 }

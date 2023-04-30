@@ -1,11 +1,13 @@
 package com.example.assignment2;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,11 +16,14 @@ import java.util.ArrayList;
 
 public class RecycleviewCategory extends RecyclerView.Adapter<RecycleviewCategory.ViewHolder> {
 
-    private String[] arrayList;
+    private final String[] categoryName;
+    private final String[] categoryid;
 
-    public RecycleviewCategory(ArrayList<String> arrayList) {
 
-        this.arrayList = arrayList.toArray(new String[0]);
+    public RecycleviewCategory(ArrayList<String> arrayList,ArrayList<String> categoryid) {
+
+        this.categoryName = arrayList.toArray(new String[0]);
+        this.categoryid = categoryid.toArray(new String[0]);
     }
 
     public static class viewHolder extends RecyclerView.ViewHolder {
@@ -40,13 +45,15 @@ public class RecycleviewCategory extends RecyclerView.Adapter<RecycleviewCategor
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecycleviewCategory.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecycleviewCategory.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        holder.textView3.setText(arrayList[position]);
+        holder.textView3.setText(categoryName[position]);
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Shop.class);
+                String a= categoryid[position];
+                Toast.makeText(v.getContext(), "Id is= "+a, Toast.LENGTH_SHORT).show();
 
                 v.getContext().startActivity(intent);
             }
@@ -55,7 +62,7 @@ public class RecycleviewCategory extends RecyclerView.Adapter<RecycleviewCategor
 
     @Override
     public int getItemCount() {
-        return arrayList.length;
+        return categoryName.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
