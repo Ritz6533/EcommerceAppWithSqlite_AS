@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class Category extends AppCompatActivity {
     DbHelper DB;
+    FloatingActionButton addcategory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,7 @@ public class Category extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         addrecycleview();
+        getCategoryList();
     }
 
     private void addrecycleview() {
@@ -55,14 +57,7 @@ public class Category extends AppCompatActivity {
         categoryList.setLayoutManager(new LinearLayoutManager(Category.this));
         categoryList.setAdapter(recycleviewCategory);
 
-        FloatingActionButton addCategory = findViewById(R.id.addCategorybtn);
-        addCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Shop.class);
-                startActivity(intent);
-            }
-        });
+
     }
 
 
@@ -78,7 +73,26 @@ public class Category extends AppCompatActivity {
 
     public void getCategoryList() {
 
+        addcategory=findViewById(R.id.addCategorybtn);
+        addcategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Addcategory bannerCategory = new Addcategory();
+                bannerCategory.show(getSupportFragmentManager(), "fragment_addcategory");
+            }
+        });
         // now you can use the array lists to populate your UI or perform other operations
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        addrecycleview();
+        getCategoryList();
+
+    }
+
 
 }

@@ -189,7 +189,18 @@ public class DbHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Boolean updateCategory(String category_id, String categoryName) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues ContentValues = new ContentValues();
+        ContentValues.put("category_id", category_id);
+        ContentValues.put("categoryName", categoryName);
 
+        long result = MyDB.update("category", ContentValues, "category_id = ? ", new String[]{categoryName});
+
+        if (result == -1) return false;
+        else
+            return true;
+    }
 
 
 }

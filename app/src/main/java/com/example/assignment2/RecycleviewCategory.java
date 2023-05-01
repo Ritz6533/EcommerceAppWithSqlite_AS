@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -51,14 +52,17 @@ public class RecycleviewCategory extends RecyclerView.Adapter<RecycleviewCategor
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Shop.class);
-                String a= categoryid[position];
-                Toast.makeText(v.getContext(), "Id is= "+a, Toast.LENGTH_SHORT).show();
 
-                v.getContext().startActivity(intent);
+                FragmentManager fragmentManager = ((Category) v.getContext()).getSupportFragmentManager();
+                Editcategory editFragment = new Editcategory();
+                editFragment.show(fragmentManager, "fragment_editcategory");
             }
+
+
         });
     }
+
+
 
     @Override
     public int getItemCount() {

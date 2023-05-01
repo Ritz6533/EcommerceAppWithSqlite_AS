@@ -7,6 +7,7 @@
     android:background="#6200EB"
     tools:context=".Category">
 
+
     <TextView
         android:id="@+id/textView12"
         android:layout_width="match_parent"
@@ -18,12 +19,13 @@
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="30dp"
         android:background="#6200EB"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +40,8 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="25dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:paddingBottom="25dp">
 
         </androidx.recyclerview.widget.RecyclerView>
     </ScrollView>
@@ -49,6 +52,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:contentDescription="@string/add"
+        android:focusable="true"
         android:soundEffectsEnabled="false"
         android:tint="#FFFFFF"
         app:backgroundTint="#138AF2"
@@ -60,9 +65,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.92"
         app:maxImageSize="35dp"
-        app:srcCompat="@drawable/add_circle_24"
-        android:focusable="true"
-        android:contentDescription="@string/add" />
+        app:srcCompat="@drawable/add_circle_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
