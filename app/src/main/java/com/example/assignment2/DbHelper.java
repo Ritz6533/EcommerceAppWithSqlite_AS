@@ -192,15 +192,20 @@ public class DbHelper extends SQLiteOpenHelper {
     public Boolean updateCategory(String category_id, String categoryName) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues ContentValues = new ContentValues();
-        ContentValues.put("category_id", category_id);
         ContentValues.put("categoryName", categoryName);
 
-        long result = MyDB.update("category", ContentValues, "category_id = ? ", new String[]{categoryName});
+        long result = MyDB.update("category", ContentValues, "category_id = ? ", new String[]{category_id});
 
         if (result == -1) return false;
         else
             return true;
     }
+    public boolean deleteCategory(String category_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int result = db.delete("category", "category_id=?", new String[]{category_id});
+        return result > 0;
+    }
+
 
 
 }

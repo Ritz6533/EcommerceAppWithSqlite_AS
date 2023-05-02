@@ -2,6 +2,7 @@ package com.example.assignment2;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,9 +54,19 @@ public class RecycleviewCategory extends RecyclerView.Adapter<RecycleviewCategor
             @Override
             public void onClick(View v) {
 
+                String a= categoryid[position];
+                String b= categoryName[position];
+                Toast.makeText(v.getContext(), "Id is= "+a+" "+b , Toast.LENGTH_SHORT).show();
+
+                Bundle args = new Bundle();
+                args.putString("categoryId", categoryid[position]);
+                args.putString("categoryName", categoryName[position]);
+
                 FragmentManager fragmentManager = ((Category) v.getContext()).getSupportFragmentManager();
                 Editcategory editFragment = new Editcategory();
                 editFragment.show(fragmentManager, "fragment_editcategory");
+                editFragment.setArguments(args);
+
             }
 
 

@@ -62,7 +62,7 @@ public class Addcategory extends DialogFragment {
             @Override
             public void onClick(View v) {
 
-            // Close the fragment
+                // Close the fragment
                 dismiss();
             }
         });
@@ -70,5 +70,5 @@ public class Addcategory extends DialogFragment {
         return view;
     }
 
-    }
+}
 

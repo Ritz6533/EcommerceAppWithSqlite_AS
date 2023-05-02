@@ -24,7 +24,7 @@ public class Category extends AppCompatActivity {
 
 
         //back arrow
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         addrecycleview();
         getCategoryList();
