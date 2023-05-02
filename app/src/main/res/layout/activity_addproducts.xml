@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile">
+    tools:context=".Addproducts">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/userimageview"
+                android:id="@+id/productimageview"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="68dp"
@@ -31,22 +31,37 @@
                 app:srcCompat="@drawable/defaultuser"
                 tools:srcCompat="@drawable/defaultuser" />
 
-            <EditText
-                android:id="@+id/newregPassword"
-                android:layout_width="0dp"
+            <Spinner
+                android:id="@+id/categorydropdownspinner"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtview1" />
+
+            <EditText
+                android:id="@+id/txtdesc"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="25dp"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:gravity="top"
+                android:hint="@string/type_the_product_description"
+                android:inputType="text|textMultiLine|textCapSentences"
+                android:maxLines="7"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newtextView2" />
+                app:layout_constraintTop_toBottomOf="@+id/txtview5" />
 
             <EditText
-                android:id="@+id/newregFullName"
+                android:id="@+id/newProductname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
@@ -56,10 +71,10 @@
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newtextView5" />
+                app:layout_constraintTop_toBottomOf="@+id/producttextview" />
 
             <EditText
-                android:id="@+id/newregAddress"
+                android:id="@+id/newListprice"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
@@ -70,71 +85,56 @@
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newtextView7" />
+                app:layout_constraintTop_toBottomOf="@+id/newtxt2" />
+
 
             <EditText
-                android:id="@+id/categorydropdownspinner"
+                android:id="@+id/newmarketprice"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
                 android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="25dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newtextView8" />
-
-            <EditText
-                android:id="@+id/newregrePassword"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:ems="10"
-                android:inputType="textPassword"
+                android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/newtextView10" />
 
             <EditText
-                android:id="@+id/newregPhoneno"
-                android:layout_width="200dp"
-                android:layout_height="42dp"
+                android:id="@+id/newRetailprice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="25dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newtextView9" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/newtxt3" />
 
             <Button
-                android:id="@+id/newbtnSave"
+                android:id="@+id/newbtnaddproduct"
                 android:layout_width="122dp"
                 android:layout_height="54dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/save"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/add_product"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btnBack"
-                app:layout_constraintTop_toBottomOf="@+id/newregrePassword" />
-
-            <Button
-                android:id="@+id/btnBack"
-                android:layout_width="121dp"
-                android:layout_height="53dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/back"
-                app:layout_constraintEnd_toStartOf="@+id/newbtnSave"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newregrePassword" />
+                app:layout_constraintTop_toBottomOf="@+id/newmarketprice" />
 
             <TextView
-                android:id="@+id/newtextView7"
+                android:id="@+id/newtxt2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="30dp"
-                android:text="@string/address"
+                android:text="@string/list_price"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -143,60 +143,61 @@
                 app:layout_constraintTop_toBottomOf="@+id/categorydropdownspinner" />
 
             <TextView
-                android:id="@+id/newtextView8"
+                android:id="@+id/txtview1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:text="@string/postcode"
+                android:text="@string/product_category"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.266"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newregFullName" />
+                app:layout_constraintTop_toBottomOf="@+id/newProductname" />
 
             <TextView
-                android:id="@+id/newtextView9"
+                android:id="@+id/newtxt3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:text="@string/phone"
+                android:text="@string/retail_price"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.491"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newregAddress" />
+                app:layout_constraintTop_toBottomOf="@+id/newListprice" />
 
             <TextView
-                android:id="@+id/newtextView5"
+                android:id="@+id/producttextview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="80dp"
                 android:layout_marginRight="30dp"
-                android:text="@string/fname"
+                android:text="@string/product_name"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.491"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/userimageview" />
+                app:layout_constraintTop_toBottomOf="@+id/productimageview" />
 
             <TextView
-                android:id="@+id/newtextView2"
+                android:id="@+id/txtview5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:text="@string/password"
+                android:text="@string/product_description"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newregPhoneno" />
+                app:layout_constraintTop_toBottomOf="@+id/newRetailprice" />
 
             <TextView
                 android:id="@+id/newtextView10"
@@ -204,91 +205,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:text="@string/rpassword"
+                android:text="@string/market_price"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.416"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newregPassword" />
+                app:layout_constraintTop_toBottomOf="@+id/txtdesc" />
 
-            <TextView
-                android:id="@+id/xtextViews"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginTop="50dp"
-                android:background="#6200ED"
-                android:gravity="center"
-                android:text="@string/copyright"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnBack" />
-
-
-            <com.hbb20.CountryCodePicker
-                android:id="@+id/newregCountrycode"
-                android:layout_width="wrap_content"
-                android:layout_height="41dp"
-                android:layout_marginStart="30dp"
-                app:ccp_defaultNameCode="US"
-                app:layout_constraintEnd_toStartOf="@+id/newregPhoneno"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newtextView9" />
-
-            <TextView
-                android:id="@+id/gettextemail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="@string/email"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/userimageview" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton"
+                android:id="@+id/fabproductimg"
                 android:layout_width="51dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="-30dp"
                 android:layout_marginTop="-30dp"
                 android:clickable="true"
+                android:focusable="true"
                 app:backgroundTint="#BE78FB"
                 app:backgroundTintMode="src_in"
-                app:layout_constraintStart_toEndOf="@+id/userimageview"
-                app:layout_constraintTop_toBottomOf="@+id/userimageview"
+                app:layout_constraintStart_toEndOf="@+id/productimageview"
+                app:layout_constraintTop_toBottomOf="@+id/productimageview"
                 app:srcCompat="@android:drawable/ic_input_add" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginBottom="20dp"
-                android:text="Last Updated on :"
-                app:layout_constraintBottom_toTopOf="@+id/xtextViews"
-                app:layout_constraintEnd_toStartOf="@+id/updatedateis"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/updatedateis"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="20dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toTopOf="@+id/xtextViews"
-                app:layout_constraintStart_toEndOf="@+id/textView4" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

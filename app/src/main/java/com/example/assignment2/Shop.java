@@ -82,7 +82,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent x = new Intent(Shop.this, Category.class);
+                Intent x = new Intent(Shop.this, Editproducts.class);
                 startActivity(x);
             }
         });

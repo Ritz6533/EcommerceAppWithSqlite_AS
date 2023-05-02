@@ -24,7 +24,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase MyDB) {
         try {
             MyDB.execSQL("CREATE TABLE userData (email TEXT PRIMARY KEY , password TEXT , country TEXT , fullname TEXT , address TEXT, postcode TEXT, phoneNumber TEXT, imagepath TEXT, dateRegister TEXT DEFAULT (datetime('now')), dateUpdate TEXT DEFAULT (datetime('now')));");
-            MyDB.execSQL("CREATE TABLE product (product_id INTEGER PRIMARY KEY AUTOINCREMENT, productName TEXT NOT NULL, price TEXT NOT NULL, description TEXT NOT NULL, listprice TEXT NOT NULL, retailprice TEXT NOT NULL, image BLOB, productAddeddate TEXT DEFAULT (datetime('now')), productupdateddate TEXT DEFAULT (datetime('now')), category_id TEXT NOT NULL, FOREIGN KEY (category_id) REFERENCES category(category_id));");
+            MyDB.execSQL("CREATE TABLE product (product_id INTEGER PRIMARY KEY AUTOINCREMENT, productName TEXT NOT NULL, price TEXT NOT NULL, description TEXT NOT NULL, listprice TEXT NOT NULL, retailprice TEXT NOT NULL, imagelocation TEXT, productAddeddate TEXT DEFAULT (datetime('now')), productupdateddate TEXT DEFAULT (datetime('now')), category_id TEXT NOT NULL, FOREIGN KEY (category_id) REFERENCES category(category_id));");
             MyDB.execSQL("CREATE TABLE category (category_id INTEGER PRIMARY KEY AUTOINCREMENT, categoryName TEXT NOT NULL);");
             MyDB.execSQL("CREATE TABLE orders (order_id INTEGER PRIMARY KEY AUTOINCREMENT, orderDate TEXT DEFAULT (datetime('now')), email TEXT NOT NULL, FOREIGN KEY (email) REFERENCES userData(email) );");
 
@@ -182,6 +182,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+
     public Cursor getAllCategories() {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] projection = { "category_id", "categoryName" };
@@ -207,7 +208,58 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
 
+    public Boolean insertproduct(String productName, String price, String description, String listprice, String retailprice, String imagelocation, String category_id) {
 
+        Date cd = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + cd);
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        String newDateis = df.format(cd);
+
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues ContentValues = new ContentValues();
+        ContentValues.put("productName", productName);
+        ContentValues.put("price", price);
+        ContentValues.put("description", description);
+        ContentValues.put("listprice", listprice);
+        ContentValues.put("retailprice", retailprice);
+        ContentValues.put("imagelocation", imagelocation);
+        ContentValues.put("category_id", category_id);
+
+
+        long result = MyDB.insert("product", null, ContentValues);
+
+        if (result == -1) return false;
+        else
+            return true;
+
+
+    }
+    public Cursor getproductById(String product_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = {"productName", "price", "description", "listprice", "retailprice", "imagelocation", "category_id"};
+        String selection = "product_id = ?";
+        String[] selectionArgs = {product_id};
+        Cursor cursor = db.query("product", projection, selection, selectionArgs, null, null, null);
+        return cursor;
+    }
+
+    public Boolean updateProduct(String product_id,String productName, String price, String description, String listprice, String retailprice, String imagelocation, String category_id) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues ContentValues = new ContentValues();
+        ContentValues.put("productName", productName);
+        ContentValues.put("price", price);
+        ContentValues.put("description", description);
+        ContentValues.put("listprice", listprice);
+        ContentValues.put("retailprice", retailprice);
+        ContentValues.put("imagelocation", imagelocation);
+        ContentValues.put("category_id", category_id);
+        long result = MyDB.update("product", ContentValues, "product_id = ? ", new String[]{product_id});
+
+        if (result == -1) return false;
+        else
+            return true;
+    }
 }
 
 
