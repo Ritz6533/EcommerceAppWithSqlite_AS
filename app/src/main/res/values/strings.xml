@@ -59,6 +59,7 @@
     <string name="product_category">Product Category</string>
     <string name="type_the_product_description">Type the product description</string>
     <string name="add_product">Add Product</string>
+    <string name="edit_product">Edit Product</string>
 
 
 </resources>

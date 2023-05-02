@@ -260,6 +260,11 @@ public class DbHelper extends SQLiteOpenHelper {
         else
             return true;
     }
+    public boolean deleteProduct(String product_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int result = db.delete("product", "product_id=?", new String[]{product_id});
+        return result > 0;
+    }
 }
 
 

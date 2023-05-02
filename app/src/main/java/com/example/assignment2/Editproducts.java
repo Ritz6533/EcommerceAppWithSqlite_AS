@@ -30,7 +30,7 @@ public class Editproducts extends AppCompatActivity {
     DbHelper DB;
     Spinner namesSpinner;
     ImageView imgDisplay;
-    Button save;
+    Button save, delete;
     String stringUri, categoryidis, pid;
     FloatingActionButton addImagebtn;
     EditText productName, retailPrice, listprice, marketprice, productDescription;
@@ -61,6 +61,7 @@ public class Editproducts extends AppCompatActivity {
         save = findViewById(R.id.newbtnaddproduct1);
         addImagebtn = findViewById(R.id.fabproductimg1);
         imgDisplay = findViewById(R.id.productimageview1);
+        delete = findViewById(R.id.deleteproductbtn);
 
         //get the view from db//
          pid ="3";
@@ -200,22 +201,40 @@ public class Editproducts extends AppCompatActivity {
             }
         });
 
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Boolean delete = DB.deleteProduct(pid);
+
+                if (delete == true) {
+                    Toast.makeText(Editproducts.this, "Product Deleted", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), Products.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(Editproducts.this, "Error Deleting", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        try {
-            Uri uri = data.getData();
+        if (resultCode == RESULT_OK && data != null) {
+            try {
+                Uri uri = data.getData();
 
-            imgDisplay.setImageURI(uri);
-            stringUri = uri.toString();
-            Log.d("msg", "value of uri from onactiv method " + stringUri);
-        } catch (Exception e) {
-            e.printStackTrace();
+                imgDisplay.setImageURI(uri);
+                stringUri = uri.toString();
+                Log.d("msg", "value of uri is  " + stringUri);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
+
 
 
     @Override

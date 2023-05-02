@@ -158,15 +158,19 @@ public class Addproducts extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        try{
-            Uri uri= data.getData();
+        if (resultCode == RESULT_OK && data != null) {
+            try {
+                Uri uri = data.getData();
 
-        imgDisplay.setImageURI(uri);
-        stringUri = uri.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
+                imgDisplay.setImageURI(uri);
+                stringUri = uri.toString();
+                Log.d("msg", "value of uri is  " + stringUri);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
+
 
 
 

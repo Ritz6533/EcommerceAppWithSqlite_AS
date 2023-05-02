@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/deletebtn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Editproducts">
@@ -121,10 +122,10 @@
                 android:layout_height="54dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/add_product"
+                android:text="@string/edit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/deleteproductbtn"
                 app:layout_constraintTop_toBottomOf="@+id/newmarketprice1" />
 
             <TextView
@@ -227,6 +228,18 @@
                 app:layout_constraintStart_toEndOf="@+id/productimageview1"
                 app:layout_constraintTop_toBottomOf="@+id/productimageview1"
                 app:srcCompat="@android:drawable/ic_input_add" />
+
+            <Button
+                android:id="@+id/deleteproductbtn"
+                android:layout_width="122dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/delete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/newbtnaddproduct1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/newmarketprice1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

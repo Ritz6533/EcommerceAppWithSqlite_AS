@@ -55,7 +55,6 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         DB = new DbHelper(this);
-
         //Hooks
         menuIcon = findViewById(R.id.menu_icon);
         contentView = findViewById(R.id.content);
@@ -70,7 +69,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
             emailkey = sessionManager.sharedPreferences.getString("emailkey", "000");
 
         }
-        emailkey= "000";
+        emailkey= "root";
         setupNavigationDrawer(emailkey);
 
 

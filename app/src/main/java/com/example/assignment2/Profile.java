@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +38,7 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SessionManager sessionManager = new SessionManager(this);
 
@@ -127,7 +129,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Log.d("msg","heyy addressis "+ stringUri );
+                Log.d("msg","heyy uriaddressis "+ stringUri );
 
 
 
@@ -137,7 +139,7 @@ public class Profile extends AppCompatActivity {
                 String num =phoneNumber.getText().toString();
                 String phoneNumberis= phoneNumber.getText().toString();
 
-                String emailis = "a@bc.d";
+                String emailis = email.getText().toString();
                 String fullNameis = fullName.getText().toString().toUpperCase();
                 String addressis = address.getText().toString().toUpperCase();
                 String postcodeis = postcode.getText().toString().toUpperCase();
@@ -182,6 +184,7 @@ public class Profile extends AppCompatActivity {
                     if (passwordis.equals(repasswordis)) {
 
                         Boolean insert = DB.updateData(emailis, passwordis, countryis, fullNameis, addressis, postcodeis, phoneNumberis,stringUri);
+                        Log.d("MGD", "stringUri = " + stringUri);
                         if (insert == true) {
                             Toast.makeText(Profile.this, "Details Updated", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), Shop.class);
@@ -214,16 +217,34 @@ public class Profile extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Uri uri= data.getData();
-        imgDisplay.setImageURI(uri);
-         stringUri = uri.toString();
+        if (resultCode == RESULT_OK && data != null) {
+            try {
+                Uri uri = data.getData();
+
+                imgDisplay.setImageURI(uri);
+                stringUri = uri.toString();
+                Log.d("msg", "value of uri is  " + stringUri);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
+}
 
 
-    }
+
+
