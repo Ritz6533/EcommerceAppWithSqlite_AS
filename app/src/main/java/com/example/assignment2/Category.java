@@ -27,7 +27,7 @@ public class Category extends AppCompatActivity {
          getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         addrecycleview();
-        getCategoryList();
+        addcategorylist();
     }
 
     private void addrecycleview() {
@@ -71,7 +71,7 @@ public class Category extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getCategoryList() {
+    public void addcategorylist() {
 
         addcategory=findViewById(R.id.addCategorybtn);
         addcategory.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +90,7 @@ public class Category extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         addrecycleview();
-        getCategoryList();
+        addcategorylist();
 
     }
 

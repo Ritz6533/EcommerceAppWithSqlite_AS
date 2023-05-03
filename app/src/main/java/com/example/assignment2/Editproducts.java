@@ -41,7 +41,7 @@ public class Editproducts extends AppCompatActivity {
         setContentView(R.layout.activity_editproducts);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         DB = new DbHelper(this);
-
+        pid = getIntent().getStringExtra("pid");
         settheview();
 
 
@@ -64,7 +64,6 @@ public class Editproducts extends AppCompatActivity {
         delete = findViewById(R.id.deleteproductbtn);
 
         //get the view from db//
-         pid ="3";
 
         Cursor cursor = DB.getproductById(pid);
 

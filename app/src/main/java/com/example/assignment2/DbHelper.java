@@ -265,6 +265,12 @@ public class DbHelper extends SQLiteOpenHelper {
         int result = db.delete("product", "product_id=?", new String[]{product_id});
         return result > 0;
     }
+    public Cursor getAllProducts() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = { "product_id", "productName", "price", "description", "listprice", "retailprice", "imagelocation", "category_id" };
+        Cursor cursor = db.query("product", projection, null, null, null, null, null);
+        return cursor;
+    }
 }
 
 
