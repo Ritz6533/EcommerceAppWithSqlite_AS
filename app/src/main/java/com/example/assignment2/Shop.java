@@ -15,6 +15,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,6 +27,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -37,7 +40,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
     String TheChannelName = "ce";
     String Descriptionis = "a";
     int notificationid = 0;
-    String emailkey= "000";
+    String emailkey;
     ImageView menuIcon;
     LinearLayout contentView;
 
@@ -68,8 +71,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         if (sessionManager.isLoggedIn()) {
             emailkey = sessionManager.sharedPreferences.getString("emailkey", "000");
 
-        }
-        emailkey= "root";
+        }else{emailkey="000";}
         setupNavigationDrawer(emailkey);
 
 
@@ -107,7 +109,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, TheChannelID)
                 .setSmallIcon(R.drawable.logobk)
                 .setContentTitle("WELCOME TO SHOPPY APP")
-                .setContentText("")
+                .setContentText(" Hello!! ID- "+emailkey)
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(" Hello!! ID- "+emailkey))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -204,9 +206,11 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
                 break;
             case R.id.nav_logout:
                 Intent logout = new Intent(Shop.this, Shop.class);
-                startActivity(logout);
+                SessionManager sessionManager = new SessionManager(Shop.this);
+                sessionManager.logout();
                 finishAffinity();
-                System.exit(0);
+
+                startActivity(logout);
                 break;
             case R.id.nav_category:
                 Intent category = new Intent(Shop.this, Category.class);
@@ -227,13 +231,14 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
     private void setupNavigationDrawer(String userType) {
 
         Menu menu = navigationView.getMenu();
-
         // Clear the existing menu items
         menu.clear();
         menu.close();
         // Inflate the appropriate menu based on the user type
         if (userType.equals("root")) {
-            navigationView.inflateMenu(R.menu.admin_navigation_menu);        menu.close();
+            navigationView.inflateMenu(R.menu.admin_navigation_menu);
+
+            menu.close();
 
         } else if(userType.equals("000")) {
             navigationView.inflateMenu(R.menu.def_navigation_menu);        menu.close();
@@ -242,7 +247,9 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
             navigationView.inflateMenu(R.menu.userlogged_menu);        menu.close();
 
         }
-        //menu.close();
+        //adding details in nav header
+
+
 
 
         //navigationView.setVisibility(View.VISIBLE);
@@ -250,8 +257,34 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
 
         // Set the item selection listener
         navigationView.setNavigationItemSelectedListener(this);
+// Set the text of the username TextView in the header
+        if(!userType.equals("000")) {
 
-        // Set the default checked item
+            Cursor cursor = DB.getUserDataById(userType);
+            View headerView = navigationView.getHeaderView(0);
+            TextView emailis = headerView.findViewById(R.id.nav_email);
+            TextView usernameis = headerView.findViewById(R.id.nav_username);
+            ImageView imgDisplay = headerView.findViewById(R.id.nav_userimg);
+// iterate through the cursor and display the data in your UI
+            while (cursor.moveToNext()) {
+                String getemail = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+                emailis.setText(getemail);
+
+                String getfullname = cursor.getString(cursor.getColumnIndexOrThrow("fullname"));
+                usernameis.setText(getfullname);
+
+                String getimagepath = cursor.getString(cursor.getColumnIndexOrThrow("imagepath"));
+                //  Convert the Uri string back to a Uri object
+                try{
+                    Uri uriImg = Uri.parse(getimagepath);
+                    imgDisplay.setImageURI(uriImg);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }}
+
+            // Set the default checked item
         navigationView.setCheckedItem(R.id.nav_shop);
 
         menuIcon.setOnClickListener(new View.OnClickListener() {
@@ -264,6 +297,36 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         });
     }
 
+    protected void onResume() {
+        super.onResume();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_shop);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        DB = new DbHelper(this);
+        //Hooks
+        menuIcon = findViewById(R.id.menu_icon);
+        contentView = findViewById(R.id.content);
 
+        //Menu Hooks
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigation_view);
+
+        SessionManager sessionManager = new SessionManager(this);
+
+        if (sessionManager.isLoggedIn()) {
+            emailkey = sessionManager.sharedPreferences.getString("emailkey", "000");
+
+        }else{emailkey="000";}
+        setupNavigationDrawer(emailkey);
+
+
+
+        if (!emailkey.equals("000"))
+            notificationadd();
+
+
+
+    }
 
 }
