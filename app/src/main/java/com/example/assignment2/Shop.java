@@ -3,11 +3,13 @@ package com.example.assignment2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 
 
 import android.app.NotificationChannel;
@@ -22,11 +24,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +42,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
     int notificationid = 0;
     String emailkey;
     ImageView menuIcon;
-    LinearLayout contentView;
+    ConstraintLayout contentView;
 
     //Drawer Menu
     DrawerLayout drawerLayout;
@@ -58,6 +58,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         DB = new DbHelper(this);
+        fragmentview();
         //Hooks
         menuIcon = findViewById(R.id.menu_icon);
         contentView = findViewById(R.id.content);
@@ -78,15 +79,6 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
 
         if (!emailkey.equals("000"))
             notificationadd();
-
-        s=findViewById(R.id.s);
-        s.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent x = new Intent(Shop.this, Products.class);
-                startActivity(x);
-            }
-        });
 
 
         DB.insertcategory("category9");
@@ -297,12 +289,35 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         });
     }
 
+    private void fragmentview(){
+
+        //default fragment
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentshopview, fragment_Shopping.class, null)
+                .commit();
+
+        Button shoppy = findViewById(R.id.fra_shopping);
+        shoppy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragmentshopview, fragment_Shopping.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("name") // Name can be null
+                        .commit();
+
+            }
+        });
+    }
     protected void onResume() {
         super.onResume();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_shop);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        fragmentview();
         DB = new DbHelper(this);
         //Hooks
         menuIcon = findViewById(R.id.menu_icon);
