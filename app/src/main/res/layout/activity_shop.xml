@@ -88,25 +88,37 @@ tools:context=".Shop">
             app:layout_constraintStart_toStartOf="parent">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/fra_liked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:drawableTop="@drawable/favourite"
+                android:padding="10dp"
+                android:text="Liked"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/fra_shopping"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/shop" />
+                android:drawableTop="@drawable/shop"
+                android:padding="10dp"
+                android:text="@string/shop"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/fra_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:drawableTop="@drawable/cart"
+                android:padding="10dp"
+                android:text="@string/cart"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

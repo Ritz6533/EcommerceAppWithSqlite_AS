@@ -76,9 +76,9 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         setupNavigationDrawer(emailkey);
 
 
-
         if (!emailkey.equals("000"))
             notificationadd();
+
 
 
         DB.insertcategory("category9");
@@ -91,7 +91,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
 
-    private void notificationadd() {
+    public void notificationadd() {
         createNotificationChannel();
 
         Intent intent = new Intent(this, Shop.class);
@@ -183,7 +183,8 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
                 Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_faq:
-                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();                break;
+                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.nav_exit:
                 android.os.Process.killProcess(android.os.Process.myPid());
                 System.exit(1);
@@ -213,8 +214,8 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
 
                 break;
             case R.id.nav_products:
-                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
-
+                Intent p = new Intent(Shop.this, Products.class);
+                startActivity(p);
                 break;
         }
         return true;
@@ -298,12 +299,38 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
                 .commit();
 
         Button shoppy = findViewById(R.id.fra_shopping);
+        Button carts = findViewById(R.id.fra_cart);
+        Button likeditems = findViewById(R.id.fra_liked);
         shoppy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.fragmentshopview, fragment_Shopping.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("name") // Name can be null
+                        .commit();
+
+            }
+        });
+        carts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragmentshopview, fragment_cart.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("name") // Name can be null
+                        .commit();
+
+            }
+        });
+        likeditems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragmentshopview, fragment_fav_items.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack("name") // Name can be null
                         .commit();
@@ -337,8 +364,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
 
 
 
-        if (!emailkey.equals("000"))
-            notificationadd();
+
 
 
 

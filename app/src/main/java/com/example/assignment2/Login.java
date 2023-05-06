@@ -31,6 +31,7 @@ public class Login extends AppCompatActivity {
 
 
         DB = new DbHelper(this);
+
         onclicklisteners();
 
     }

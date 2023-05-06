@@ -37,9 +37,16 @@ public class Addcategory extends DialogFragment {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 String newCategoryName = nameEditText.getText().toString();
                 Log.d("MSG", "Category name is "+newCategoryName);
-                // Do something with the new name, e.g. save it to a database
+
+                if (  newCategoryName.equals("")) {
+                    Toast.makeText(getContext(), "Error! Enter the Category", Toast.LENGTH_SHORT).show();
+
+
+                } else {
                 try{
                     Boolean success = DB.insertcategory(newCategoryName);
                     if(success){
@@ -55,8 +62,9 @@ public class Addcategory extends DialogFragment {
                     e.printStackTrace();
 
                 }
-            }
+            }}
         });
+
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
