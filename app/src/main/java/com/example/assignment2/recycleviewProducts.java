@@ -59,8 +59,9 @@ public class recycleviewProducts extends RecyclerView.Adapter<recycleviewProduct
     @Override
     public void onBindViewHolder(@NonNull recycleviewProducts.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
+        String pricval="$ "+productprice[position];
         holder.name.setText(productName[position]);
-        holder.price.setText(productprice[position]);
+        holder.price.setText(pricval);
         holder.description.setText(productdesc[position]);
 
         if((productimg[position]!= null)){

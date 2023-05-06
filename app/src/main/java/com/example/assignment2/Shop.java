@@ -369,5 +369,8 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
 
 
     }
+    public FragmentManager getMyFragmentManager() {
+        return getSupportFragmentManager();
+    }
 
 }
