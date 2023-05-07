@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 public class fragment_Shopping extends Fragment {
 
-    private RecyclerView productList, productList2;
+    private RecyclerView productList;
     private ArrayList<String> productNameList;
     private ArrayList<String> productpriceList;
     private ArrayList<String> productdescList;

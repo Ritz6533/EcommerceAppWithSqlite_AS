@@ -189,6 +189,14 @@ public class DbHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query("category", projection, null, null, null, null, null);
         return cursor;
     }
+    public Cursor getcategoryyId(String category_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = { "category_id", "categoryName" };
+        String selection = "category_id = ?";
+        String[] selectionArgs = {category_id};
+        Cursor cursor = db.query("category", projection, selection, selectionArgs, null, null, null);
+        return cursor;
+    }
 
     public Boolean updateCategory(String category_id, String categoryName) {
         SQLiteDatabase MyDB = this.getWritableDatabase();

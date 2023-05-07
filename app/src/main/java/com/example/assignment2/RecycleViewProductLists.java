@@ -81,9 +81,19 @@ package com.example.assignment2;
                 holder.productView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Bundle args = new Bundle();
+                            args.putString("pid", productId.get(position));
+                            Log.d("MSG","ID is ="+productId.get(position));
+
+
+                            // Create a new instance of the fragment
+                            single_ProductView fragment = new single_ProductView();
+
+                            // Set the bundle as the fragment's arguments
+                            fragment.setArguments(args);
 
                             fragmentManager.beginTransaction()
-                                    .replace(R.id.fragmentshopview, single_ProductView.class, null)
+                                    .replace(R.id.fragmentshopview, fragment)
                                     .setReorderingAllowed(true)
                                     .addToBackStack("name") // Name can be null
                                     .commit();
