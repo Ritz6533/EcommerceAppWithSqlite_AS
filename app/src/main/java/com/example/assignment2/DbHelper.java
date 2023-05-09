@@ -26,7 +26,9 @@ public class DbHelper extends SQLiteOpenHelper {
             MyDB.execSQL("CREATE TABLE userData (email TEXT PRIMARY KEY , password TEXT , country TEXT , fullname TEXT , address TEXT, postcode TEXT, phoneNumber TEXT, imagepath TEXT, dateRegister TEXT DEFAULT (datetime('now')), dateUpdate TEXT DEFAULT (datetime('now')));");
             MyDB.execSQL("CREATE TABLE product (product_id INTEGER PRIMARY KEY AUTOINCREMENT, productName TEXT NOT NULL, price TEXT NOT NULL, description TEXT NOT NULL, listprice TEXT NOT NULL, retailprice TEXT NOT NULL, imagelocation TEXT, productAddeddate TEXT DEFAULT (datetime('now')), productupdateddate TEXT DEFAULT (datetime('now')), category_id TEXT NOT NULL, FOREIGN KEY (category_id) REFERENCES category(category_id));");
             MyDB.execSQL("CREATE TABLE category (category_id INTEGER PRIMARY KEY AUTOINCREMENT, categoryName TEXT NOT NULL);");
-            MyDB.execSQL("CREATE TABLE orders (order_id INTEGER PRIMARY KEY AUTOINCREMENT, orderDate TEXT DEFAULT (datetime('now')), email TEXT NOT NULL, FOREIGN KEY (email) REFERENCES userData(email) );");
+            MyDB.execSQL("CREATE TABLE orders (order_id INTEGER PRIMARY KEY AUTOINCREMENT, orderDate TEXT DEFAULT (datetime('now')), email TEXT NOT NULL, totalprice TEXT NOT NULL, totalitems TEXT NOT NULL, product_idsofall TEXT NOT NULL, FOREIGN KEY (email) REFERENCES userData(email) );");
+            MyDB.execSQL("CREATE TABLE likeditems (liked_id INTEGER PRIMARY KEY AUTOINCREMENT, product_id INTEGER, email TEXT NOT NULL, FOREIGN KEY (email) REFERENCES userData(email), FOREIGN KEY (product_id) REFERENCES product(product_id) );");
+            MyDB.execSQL("CREATE TABLE cartlist (cartlistid INTEGER PRIMARY KEY AUTOINCREMENT, product_id INTEGER, email TEXT NOT NULL, FOREIGN KEY (email) REFERENCES userData(email), FOREIGN KEY (product_id) REFERENCES product(product_id) );");
 
             Log.d("database", "added tables");
 
@@ -174,29 +176,45 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getUserDataById(String email) {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase MyDB = this.getReadableDatabase();
         String[] projection = {"email", "password", "country", "fullname", "address", "postcode", "phoneNumber", "imagepath", "dateUpdate"};
         String selection = "email = ?";
         String[] selectionArgs = {email};
-        Cursor cursor = db.query("userData", projection, selection, selectionArgs, null, null, null);
+        Cursor cursor = MyDB.query("userData", projection, selection, selectionArgs, null, null, null);
         return cursor;
     }
 
 
     public Cursor getAllCategories() {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase MyDB = this.getReadableDatabase();
         String[] projection = { "category_id", "categoryName" };
-        Cursor cursor = db.query("category", projection, null, null, null, null, null);
+        Cursor cursor = MyDB.query("category", projection, null, null, null, null, null);
         return cursor;
     }
     public Cursor getcategoryyId(String category_id) {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase MyDB = this.getReadableDatabase();
         String[] projection = { "category_id", "categoryName" };
         String selection = "category_id = ?";
         String[] selectionArgs = {category_id};
-        Cursor cursor = db.query("category", projection, selection, selectionArgs, null, null, null);
+        Cursor cursor = MyDB.query("category", projection, selection, selectionArgs, null, null, null);
         return cursor;
     }
+    public Cursor getLikedProductIds(String email) {
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        String[] projection = { "product_id" };
+        String selection = "email = ?";
+        String[] selectionArgs = { email };
+
+        Cursor cursor = MyDB.query("likeditems", projection, selection, selectionArgs, null, null, null);
+
+        return cursor;
+    }
+
+
+
+
+
+
 
     public Boolean updateCategory(String category_id, String categoryName) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
@@ -210,8 +228,8 @@ public class DbHelper extends SQLiteOpenHelper {
             return true;
     }
     public boolean deleteCategory(String category_id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        int result = db.delete("category", "category_id=?", new String[]{category_id});
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        int result = MyDB.delete("category", "category_id=?", new String[]{category_id});
         return result > 0;
     }
 
@@ -244,11 +262,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
     public Cursor getproductById(String product_id) {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase MyDB = this.getReadableDatabase();
         String[] projection = {"productName", "price", "description", "listprice", "retailprice", "imagelocation", "category_id"};
         String selection = "product_id = ?";
         String[] selectionArgs = {product_id};
-        Cursor cursor = db.query("product", projection, selection, selectionArgs, null, null, null);
+        Cursor cursor = MyDB.query("product", projection, selection, selectionArgs, null, null, null);
         return cursor;
     }
 
@@ -269,8 +287,8 @@ public class DbHelper extends SQLiteOpenHelper {
             return true;
     }
     public boolean deleteProduct(String product_id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        int result = db.delete("product", "product_id=?", new String[]{product_id});
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        int result = MyDB.delete("product", "product_id=?", new String[]{product_id});
         return result > 0;
     }
     public Cursor getAllProducts() {
@@ -278,6 +296,99 @@ public class DbHelper extends SQLiteOpenHelper {
         String[] projection = { "product_id", "productName", "price", "description", "listprice", "retailprice", "imagelocation", "category_id" };
         Cursor cursor = db.query("product", projection, null, null, null, null, null);
         return cursor;
+    }
+
+    public Boolean insertlikeditem(String email, String product_id) {
+
+
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues ContentValues = new ContentValues();
+        ContentValues.put("email", email);
+        ContentValues.put("product_id", product_id);
+
+        long result = MyDB.insert("likeditems", null, ContentValues);
+
+        if (result == -1) return false;
+        else
+            return true;
+
+
+    }
+    public Boolean insertcart(String email, String product_id) {
+
+
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues ContentValues = new ContentValues();
+        ContentValues.put("email", email);
+        ContentValues.put("product_id", product_id);
+
+        long result = MyDB.insert("cartlist", null, ContentValues);
+
+        if (result == -1) return false;
+        else
+            return true;
+
+
+    }
+    public boolean deletecart(String email, String product_id) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        int result = MyDB.delete("cartlist", "email=? AND product_id=?", new String[]{email, product_id});
+        return result > 0;
+    }
+    public boolean deletelikeditems(String email, String product_id) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        int result = MyDB.delete("likeditems", "email=? AND product_id=?", new String[]{email, product_id});
+        return result > 0;
+    }
+    public Boolean checklikeditem(String email, String product_id) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        Cursor cursor = MyDB.rawQuery("Select * from likeditems where email = ? and product_id = ?", new String[]{email, product_id});
+        try {
+            if (cursor.getCount() > 0)
+
+                return true;
+            else
+                return false;
+        } finally {
+            cursor.close();
+        }
+
+    }
+    public Cursor getcheckcartpid(String email) {
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        String[] projection = { "product_id" };
+        String selection = "email = ?";
+        String[] selectionArgs = { email };
+
+        Cursor cursor = MyDB.query("cartlist", projection, selection, selectionArgs, null, null, null);
+        return cursor;
+
+
+    }
+    public Boolean addorder(String email, String totalprice, String totalitems, String product_idsofall) {
+
+
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues ContentValues = new ContentValues();
+        ContentValues.put("email", email);
+        ContentValues.put("totalprice", totalprice);
+        ContentValues.put("totalitems", totalitems);
+        ContentValues.put("product_idsofall", product_idsofall);
+
+
+
+        long result = MyDB.insert("orders", null, ContentValues);
+
+        if (result == -1) return false;
+        else
+            return true;
+
+
+    }
+    public boolean deletecart(String email) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        int result = MyDB.delete("cartlist", "email=? ", new String[]{email});
+        return result > 0;
     }
 }
 

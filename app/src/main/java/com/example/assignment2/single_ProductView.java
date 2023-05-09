@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -36,12 +37,12 @@ public class single_ProductView  extends Fragment {
         View view = inflater.inflate(R.layout.activity_single_product_view, container, false);
         DB = new DbHelper(getContext());
 
-       // return view;
+        // return view;
         Bundle args = getArguments();
         if (args != null) {
             pid = args.getString("pid");
         }
-        Log.d("MSG","ID is is ="+ pid);
+        Log.d("MSG", "ID is is =" + pid);
 
         categoryName = view.findViewById(R.id.category_name);
         marketprice = view.findViewById(R.id.product_price);
@@ -51,61 +52,109 @@ public class single_ProductView  extends Fragment {
         imgDisplay = view.findViewById(R.id.product_image);
         addLikebtn = view.findViewById(R.id.btnlikes);
 
-        //get the view from db//
-        //getpid
-        Cursor cursor = DB.getproductById(pid);
+        SessionManager sessionManager = new SessionManager(view.getContext());
+
+        if (sessionManager.isLoggedIn()) {
+            String emailkey = sessionManager.sharedPreferences.getString("emailkey", "000");
+            Boolean checklikeditem = DB.checklikeditem(emailkey, pid);
+            if (checklikeditem) {
+                addLikebtn.setText("Liked");
+                addLikebtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
+            }}
+            //getpid
+
+            Cursor cursor = DB.getproductById(pid);
+
 
 
 // iterate through the cursor and display the data in your UI
-        while (cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
 
-            String mp = cursor.getString(cursor.getColumnIndexOrThrow("price"));
-            marketprice.setText(mp);
+                String mp = cursor.getString(cursor.getColumnIndexOrThrow("price"));
+                marketprice.setText("Price $" + mp);
 
-            String pname = cursor.getString(cursor.getColumnIndexOrThrow("productName"));
-            productName.setText(pname);
+                String pname = cursor.getString(cursor.getColumnIndexOrThrow("productName"));
+                productName.setText(pname);
 
-            String pdes = cursor.getString(cursor.getColumnIndexOrThrow("description"));
-            productDescription.setText(pdes);
+                String pdes = cursor.getString(cursor.getColumnIndexOrThrow("description"));
+                productDescription.setText(pdes);
 
-            String getimagepath = cursor.getString(cursor.getColumnIndexOrThrow("imagelocation"));
-            //  Convert the Uri string back to a Uri object
-            try {
-                Uri uriImg = Uri.parse(getimagepath);
-                imgDisplay.setImageURI(uriImg);
-                stringUri = uriImg.toString();
-                Log.d("msg", "value of uri initially " + stringUri);
+                String getimagepath = cursor.getString(cursor.getColumnIndexOrThrow("imagelocation"));
+                //  Convert the Uri string back to a Uri object
+                try {
+                    Uri uriImg = Uri.parse(getimagepath);
+                    imgDisplay.setImageURI(uriImg);
+                    stringUri = uriImg.toString();
+                    Log.d("msg", "value of uri initially " + stringUri);
 
 
-            } catch (Exception e) {
-                e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                categoryidis = cursor.getString(cursor.getColumnIndexOrThrow("category_id"));
+                Cursor x = DB.getcategoryyId(categoryidis);
+
+                while (x.moveToNext()) {
+                    String namez = x.getString(x.getColumnIndexOrThrow("categoryName"));
+                    categoryName.setText(namez);
+                }
+
+
             }
+            addCartbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (sessionManager.isLoggedIn()) {
+                        String emailkey = sessionManager.sharedPreferences.getString("emailkey", "000");
 
-            categoryidis = cursor.getString(cursor.getColumnIndexOrThrow("category_id"));
-            Cursor x =  DB.getcategoryyId(categoryidis);
+                            Boolean inserttocart = DB.insertcart(emailkey, pid);
 
-            while (x.moveToNext()) {
-                String namez = x.getString(x.getColumnIndexOrThrow("categoryName"));
-                categoryName.setText(namez);
-            }
+                            Toast.makeText(view.getContext(), "Added To Cart", Toast.LENGTH_SHORT).show();
 
+
+                    } else {
+                        Toast.makeText(view.getContext(), "Please Login To Buy items", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+
+            addLikebtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    if (sessionManager.isLoggedIn()) {
+                        String emailkey = sessionManager.sharedPreferences.getString("emailkey", "000");
+
+                        Boolean checklikeditem = DB.checklikeditem(emailkey, pid);
+                        if (!checklikeditem) {
+                            Boolean insert = DB.insertlikeditem(emailkey, pid);
+                            addLikebtn.setText("Liked");
+                            addLikebtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
+
+
+                            Toast.makeText(view.getContext(), "Liked", Toast.LENGTH_SHORT).show();}
+
+                    else{
+                            Boolean delete = DB.deletelikeditems(emailkey,pid);
+                            Toast.makeText(view.getContext(), "Liked removed", Toast.LENGTH_SHORT).show();
+                            addLikebtn.setText("Like");
+                            addLikebtn.setBackgroundColor(getResources().getColor(R.color.grey));
+
+                        }
+
+
+                    } else {
+                        Toast.makeText(view.getContext(), "Login To Add items", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+
+            return view;
 
         }
-        addCartbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
-
-        addLikebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        return view;
     }
-
-}

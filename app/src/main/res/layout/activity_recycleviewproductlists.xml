@@ -47,6 +47,23 @@
 
     </LinearLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/removefromcart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:clickable="true"
+        android:contentDescription="@string/close"
+        android:focusable="true"
+        android:visibility="gone"
+        app:backgroundTint="#5E35B1"
+        app:backgroundTintMode="add"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:maxImageSize="30dp"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
+
     <RatingBar
         android:id="@+id/ratings12"
         style="?android:attr/ratingBarStyleIndicator"
@@ -71,6 +88,5 @@
         android:textColor="#E81F1A"
         android:textSize="20sp"
         android:textStyle="bold" />
-
 
 </LinearLayout>

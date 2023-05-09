@@ -75,7 +75,7 @@ public class fragment_Shopping extends Fragment {
 
         // Create separate adapters for each RecyclerView and pass the corresponding data
 
-        RecycleViewProductLists recycleviewproductlistis = new RecycleViewProductLists(productNameList, productimgList, productpriceList, productdescList, productidList,getActivity().getSupportFragmentManager());
+        RecycleViewProductLists recycleviewproductlistis = new RecycleViewProductLists(productNameList, productimgList, productpriceList, productdescList, productidList,getActivity().getSupportFragmentManager(),false);
         // Set up the RecyclerView with a LinearLayoutManager and the recycleviewProducts adapter
         this.productList.setLayoutManager(new LinearLayoutManager(getActivity()));
         this.productList.setAdapter(recycleviewproductlistis);

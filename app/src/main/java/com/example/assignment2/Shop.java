@@ -174,7 +174,8 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
                 // Handle this case
                 break;
             case R.id.nav_order_history:
-                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
+                Intent xx = new Intent(Shop.this, orderhistory.class);
+                startActivity(xx);
                 break;
             case R.id.nav_cart:
                 Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
@@ -210,8 +211,8 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
                 startActivity(category);
                 break;
             case R.id.nav_order_List:
-                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
-
+                Intent ol = new Intent(Shop.this, orderhistory.class);
+                startActivity(ol);
                 break;
             case R.id.nav_products:
                 Intent p = new Intent(Shop.this, Products.class);
@@ -241,8 +242,6 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
 
         }
         //adding details in nav header
-
-
 
 
         //navigationView.setVisibility(View.VISIBLE);
