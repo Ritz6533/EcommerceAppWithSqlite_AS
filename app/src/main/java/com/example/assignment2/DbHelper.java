@@ -26,7 +26,7 @@ public class DbHelper extends SQLiteOpenHelper {
             MyDB.execSQL("CREATE TABLE userData (email TEXT PRIMARY KEY , password TEXT , country TEXT , fullname TEXT , address TEXT, postcode TEXT, phoneNumber TEXT, imagepath TEXT, dateRegister TEXT DEFAULT (datetime('now')), dateUpdate TEXT DEFAULT (datetime('now')));");
             MyDB.execSQL("CREATE TABLE product (product_id INTEGER PRIMARY KEY AUTOINCREMENT, productName TEXT NOT NULL, price TEXT NOT NULL, description TEXT NOT NULL, listprice TEXT NOT NULL, retailprice TEXT NOT NULL, imagelocation TEXT, productAddeddate TEXT DEFAULT (datetime('now')), productupdateddate TEXT DEFAULT (datetime('now')), category_id TEXT NOT NULL, FOREIGN KEY (category_id) REFERENCES category(category_id));");
             MyDB.execSQL("CREATE TABLE category (category_id INTEGER PRIMARY KEY AUTOINCREMENT, categoryName TEXT NOT NULL);");
-            MyDB.execSQL("CREATE TABLE orders (order_id INTEGER PRIMARY KEY AUTOINCREMENT, orderDate TEXT DEFAULT (datetime('now')), email TEXT NOT NULL, totalprice TEXT NOT NULL, totalitems TEXT NOT NULL, product_idsofall TEXT NOT NULL, FOREIGN KEY (email) REFERENCES userData(email) );");
+            MyDB.execSQL("CREATE TABLE orders (order_id INTEGER PRIMARY KEY AUTOINCREMENT, orderDate TEXT DEFAULT (datetime('now')), email TEXT NOT NULL, totalprice TEXT NOT NULL, totalitems TEXT NOT NULL, product_idsofall TEXT NOT NULL, orderstatus TEXT DEFAULT (1), FOREIGN KEY (email) REFERENCES userData(email) );");
             MyDB.execSQL("CREATE TABLE likeditems (liked_id INTEGER PRIMARY KEY AUTOINCREMENT, product_id INTEGER, email TEXT NOT NULL, FOREIGN KEY (email) REFERENCES userData(email), FOREIGN KEY (product_id) REFERENCES product(product_id) );");
             MyDB.execSQL("CREATE TABLE cartlist (cartlistid INTEGER PRIMARY KEY AUTOINCREMENT, product_id INTEGER, email TEXT NOT NULL, FOREIGN KEY (email) REFERENCES userData(email), FOREIGN KEY (product_id) REFERENCES product(product_id) );");
 
@@ -367,12 +367,17 @@ public class DbHelper extends SQLiteOpenHelper {
     }
     public Boolean addorder(String email, String totalprice, String totalitems, String product_idsofall) {
 
+        Date c = Calendar.getInstance().getTime();
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        String newDate = df.format(c);
 
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues ContentValues = new ContentValues();
         ContentValues.put("email", email);
         ContentValues.put("totalprice", totalprice);
         ContentValues.put("totalitems", totalitems);
+        ContentValues.put("orderDate", newDate);
         ContentValues.put("product_idsofall", product_idsofall);
 
 
@@ -389,6 +394,35 @@ public class DbHelper extends SQLiteOpenHelper {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         int result = MyDB.delete("cartlist", "email=? ", new String[]{email});
         return result > 0;
+    }
+    public Cursor getOrdersbyemail(String email) {
+
+
+        if(email.equals("root")){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = { "order_id", "orderDate", "email", "totalprice", "totalitems", "product_idsofall", "orderstatus" };
+        Cursor cursor = db.query("orders", projection, null, null, null, null, null);
+            return cursor;
+        }
+        else{
+            SQLiteDatabase MyDB = this.getReadableDatabase();
+            String[] projection = { "order_id", "orderDate", "email", "totalprice", "totalitems", "product_idsofall", "orderstatus" };
+            String selection = "email = ?";
+            String[] selectionArgs = {email};
+            Cursor cursor = MyDB.query("orders", projection, selection, selectionArgs, null, null, null);
+            return cursor;
+        }
+    }
+    public Boolean updateorder(String order_id, String orderstatus) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues ContentValues = new ContentValues();
+        ContentValues.put("orderstatus", orderstatus);
+
+        long result = MyDB.update("orders", ContentValues, "order_id = ? ", new String[]{order_id});
+
+        if (result == -1) return false;
+        else
+            return true;
     }
 }
 

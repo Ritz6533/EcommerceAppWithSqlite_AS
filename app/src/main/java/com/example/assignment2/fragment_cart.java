@@ -78,7 +78,13 @@ public class fragment_cart extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Boolean addcart = DB.addorder(emailkey,String.valueOf(val),String.valueOf(totalpriceis),productIds);
+                if(productIds.isEmpty()){
+                    Toast.makeText(view.getContext(), "Error Add products", Toast.LENGTH_SHORT).show();
+
+                }
+                else{
+
+                Boolean addcart = DB.addorder(emailkey,String.valueOf(totalpriceis),String.valueOf(val),productIds);
 
                 if (addcart == true) {
                     Toast.makeText(view.getContext(), "Product Added", Toast.LENGTH_SHORT).show();
@@ -93,7 +99,7 @@ public class fragment_cart extends Fragment {
 
 
 
-            }
+            }}
 
         });
 
@@ -121,7 +127,6 @@ public class fragment_cart extends Fragment {
 
             productidList.add(productid);
             val++;
-            productIds += productid + ",";
 
         } while (cursor.moveToNext());
         Log.d("MSG","ids is "+productIds);
@@ -152,6 +157,8 @@ public class fragment_cart extends Fragment {
             productimgList.add(productimage);
             // Create separate adapters for each RecyclerView and pass the corresponding data
             totalpriceis+= Integer.parseInt(productprice);
+            productIds += productName + ",";
+
         }
         RecycleViewProductLists recycleviewproductlistis1 = new RecycleViewProductLists(productNameList, productimgList, productpriceList, productdescList, productidList, getActivity().getSupportFragmentManager(),true);
         // Set up the RecyclerView with a LinearLayoutManager and the recycleviewProducts adapter

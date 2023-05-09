@@ -41,8 +41,10 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
     String Descriptionis = "a";
     int notificationid = 0;
     String emailkey;
+
     ImageView menuIcon;
     ConstraintLayout contentView;
+    Button cartsIcon;
 
     //Drawer Menu
     DrawerLayout drawerLayout;
@@ -58,9 +60,11 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         DB = new DbHelper(this);
+        cartsIcon = findViewById(R.id.carticon);
         fragmentview();
         //Hooks
         menuIcon = findViewById(R.id.menu_icon);
+
         contentView = findViewById(R.id.content);
 
         //Menu Hooks
@@ -160,7 +164,12 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
 
         switch (item.getItemId()) {
             case R.id.nav_shop:
-                Toast.makeText(Shop.this, "Clicked the shop", Toast.LENGTH_SHORT).show();
+                FragmentManager ss = getSupportFragmentManager();
+                ss.beginTransaction()
+                        .replace(R.id.fragmentshopview, fragment_Shopping.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("name") // Name can be null
+                        .commit();
                 onBackPressed();
                 break;
             case R.id.nav_profile:
@@ -168,23 +177,39 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
                 startActivity(intentx);
                 break;
             case R.id.nav_all_notification:
-                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Shop.this, "Clicked the navigation", Toast.LENGTH_SHORT).show();
+                onBackPressed();
                 break;
             case R.id.nav_liked_Items:
-                // Handle this case
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragmentshopview, fragment_fav_items.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("name") // Name can be null
+                        .commit();
+                onBackPressed();
                 break;
             case R.id.nav_order_history:
                 Intent xx = new Intent(Shop.this, orderhistory.class);
                 startActivity(xx);
                 break;
             case R.id.nav_cart:
-                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
+
+                FragmentManager fm = getSupportFragmentManager();
+                fm.beginTransaction()
+                        .replace(R.id.fragmentshopview, fragment_cart.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("name") // Name can be null
+                        .commit();
+                onBackPressed();
                 break;
             case R.id.nav_about_us:
-                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Shop.this, "Clicked about us", Toast.LENGTH_SHORT).show();
+                onBackPressed();
                 break;
             case R.id.nav_faq:
-                Toast.makeText(Shop.this, "Clicked the profile", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Shop.this, "Clicked the FAQ", Toast.LENGTH_SHORT).show();
+                onBackPressed();
                 break;
             case R.id.nav_exit:
                 android.os.Process.killProcess(android.os.Process.myPid());
@@ -216,6 +241,8 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
                 break;
             case R.id.nav_products:
                 Intent p = new Intent(Shop.this, Products.class);
+                p.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
                 startActivity(p);
                 break;
         }
@@ -287,6 +314,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
                 else drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+
     }
 
     private void fragmentview(){
@@ -336,6 +364,8 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
 
             }
         });
+
+
     }
     protected void onResume() {
         super.onResume();
@@ -365,11 +395,15 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
 
 
 
-
-
-    }
-    public FragmentManager getMyFragmentManager() {
-        return getSupportFragmentManager();
     }
 
-}
+    public void cartlog(View view) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragmentshopview, fragment_cart.class, null)
+                .setReorderingAllowed(true)
+                .addToBackStack("name") // Name can be null
+                .commit();
+    }
+    }
+

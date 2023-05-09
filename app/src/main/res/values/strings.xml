@@ -73,6 +73,14 @@
     <string name="order_details">Order Details</string>
     <string name="total_items">Total Items</string>
     <string name="total_price">Total Price</string>
+    <string name="order_received">Order Received</string>
+    <string name="order_processed">Order Processed</string>
+    <string name="order_delivered">Order Delivered</string>
+    <string name="order_number">ORDER Number</string>
+    <string name="user_email">User Email</string>
+    <string name="a_bc_deff">A@bc.deff</string>
+    <string name="order_date">Order Date</string>
+    <string name="zero">0.00</string>
 
 
 </resources>

@@ -19,9 +19,11 @@
             android:exported="false" />
         <activity
             android:name=".orderhistory"
+            android:label="@string/OrderHis"
+
             android:exported="false" />
         <activity
-            android:name=".recycleviewproductlists"
+            android:name=".RecycleViewProductLists"
             android:exported="false" />
         <activity
             android:name=".single_ProductView"
@@ -31,24 +33,37 @@
             android:exported="false" />
         <activity
             android:name=".Editproducts"
+            android:label="@string/edit_product"
+
             android:exported="false" />
         <activity
             android:name=".Addproducts"
+            android:label="@string/add_product"
+
             android:exported="false" />
         <activity
             android:name=".Products"
+            android:label="Products"
+
             android:exported="false" />
         <activity
             android:name=".Category"
+            android:label="@string/category"
+
             android:exported="false" />
         <activity
             android:name=".Profile"
+            android:label="@string/profile"
+
             android:exported="false" />
         <activity
             android:name=".Login"
+            android:label="@string/login"
+
             android:exported="false" />
         <activity
             android:name=".Register"
+
             android:label="Register New User" />
         <activity
             android:name=".Shop"
