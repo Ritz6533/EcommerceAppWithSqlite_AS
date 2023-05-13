@@ -164,6 +164,15 @@ public class Editproducts extends AppCompatActivity {
                 Log.d("msg", "value of cat id is " + categoryidis);
 
 
+                //set error if the price value is not number
+                try {
+                    double price = Double.parseDouble(marketPrice);
+                } catch (NumberFormatException e) {
+                    marketprice.setError("Invalid! Add Number");
+                    return;
+
+
+                }
                 if (categoryidis.equals("") || productname.equals("") || listPrice.equals("") || retailprice.equals("") || marketPrice.equals("") || (stringUri == null) || pDescription.equals("")) {
                     Toast.makeText(Editproducts.this, "Please fill all the fields with valid values", Toast.LENGTH_SHORT).show();
 
