@@ -41,7 +41,7 @@ public class Editcategory extends DialogFragment {
         String categoryName = args.getString("categoryName");
         nameEditText.setText(categoryName);
 
-
+        //add the buttons to edit and delete the category
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

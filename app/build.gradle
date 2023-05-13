@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    //added lib
+    //added lib for image and contry code
     implementation 'com.hbb20:ccp:2.6.1'
     implementation 'com.github.dhaval2404:imagepicker:2.1'
 

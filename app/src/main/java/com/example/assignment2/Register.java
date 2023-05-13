@@ -92,6 +92,8 @@ public class Register extends AppCompatActivity {
                     String passwordis = password.getText().toString();
                     String repasswordis = repassword.getText().toString();
 
+
+                    //check the log during developement
                     Log.d("MGD", "emailis = " + emailis);
                     Log.d("MGD", "fullNameis = " + fullNameis);
                     Log.d("MGD", "addressis = " + addressis);
@@ -102,6 +104,7 @@ public class Register extends AppCompatActivity {
                     Log.d("MGD", "repasswordis = +" + repasswordis);
 
 
+                    //check if any field are empty and show the error and prevent database null input
                     if (emailis.equals("") || !isValidEmail(emailis) || passwordis.equals("")  || repasswordis.equals("") || postcodeis.equals("") || fullNameis.equals("") || addressis.equals("") || num.equals("")) {
                         Toast.makeText(Register.this, "Please fill all the fields with valid values", Toast.LENGTH_SHORT).show();
                         if (emailis.equals("") || !isValidEmail(emailis)) {

@@ -80,11 +80,12 @@ public class Category extends AppCompatActivity {
         addcategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //add the banner
                 Addcategory bannerCategory = new Addcategory();
                 bannerCategory.show(getSupportFragmentManager(), "fragment_addcategory");
             }
         });
-        // now you can use the array lists to populate your UI or perform other operations
+
     }
 
     @Override

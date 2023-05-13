@@ -133,7 +133,7 @@ public class Profile extends AppCompatActivity {
 
 
 
-                //
+                //get ids
                 String code= countrycode.getSelectedCountryCode();
                 String countryis = countrycode.getSelectedCountryEnglishName();
                 String num =phoneNumber.getText().toString();
@@ -158,6 +158,7 @@ public class Profile extends AppCompatActivity {
                 Log.d("MGD", "stringUri = " + stringUri);
 
 
+                //validate code
                 if (  passwordis.equals("")  || repasswordis.equals("") || postcodeis.equals("") || fullNameis.equals("") || addressis.equals("") || num.equals("")) {
                     Toast.makeText(Profile.this, "Please fill all the fields with valid values", Toast.LENGTH_SHORT).show();
 

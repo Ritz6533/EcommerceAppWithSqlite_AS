@@ -120,7 +120,6 @@ public class fragment_cart extends Fragment {
             Log.d("MyActivity", "No data found in cursor");
             return;
         }
-
         // Iterate through the cursor and add the values to the ArrayLists
         do {
             String productid = cursor.getString(cursor.getColumnIndexOrThrow("product_id"));

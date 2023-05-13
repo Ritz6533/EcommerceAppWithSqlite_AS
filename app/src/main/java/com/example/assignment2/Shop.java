@@ -85,12 +85,8 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
 
 
 
-        DB.insertcategory("category9");
-        DB.insertcategory("category10");
-        DB.insertcategory("category11");
-        DB.insertcategory("category12");
-        DB.insertcategory("category13");
-        DB.insertcategory("category14");
+        DB.insertcategory("Books");
+
 
 
     }
@@ -255,7 +251,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
         // Clear the existing menu items
         menu.clear();
         menu.close();
-        // Inflate the appropriate menu based on the user type
+        // View appropriate menu based on the user type
         if (userType.equals("root")) {
             navigationView.inflateMenu(R.menu.admin_navigation_menu);
 
@@ -276,7 +272,7 @@ public class Shop extends AppCompatActivity implements NavigationView.OnNavigati
 
         // Set the item selection listener
         navigationView.setNavigationItemSelectedListener(this);
-// Set the text of the username TextView in the header
+        // Set the text of the username TextView in the header
         if(!userType.equals("000")) {
 
             Cursor cursor = DB.getUserDataById(userType);

@@ -73,14 +73,11 @@ public class Addproducts extends AppCompatActivity {
             categoryIdToNameMap.put(categoryId, categoryName);
             categoryNames.add(categoryName);
         }
-
-
-// Create the ArrayAdapter with the retrieved names
+        // Create the ArrayAdapter with the retrieved names
         ArrayAdapter<String> namesAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, categoryNames);
 
-// Set the adapter for the Spinner
-
+        // Set the adapter for the Spinner
         namesSpinner.setAdapter(namesAdapter);
         namesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -117,14 +114,24 @@ public class Addproducts extends AppCompatActivity {
                 Log.d("msg","value of uri is "+stringUri);
                 Log.d("msg","value of cat id is "+categoryidis);
 
+                //set error if the price value is not number
+                try {
+                    double price = Double.parseDouble(marketPrice);
+                } catch (NumberFormatException e) {
+                    marketprice.setError("Invalid! Add Number");
+                    return;
 
+
+                }
+
+                //validate inputs
                 if (  categoryidis.equals("")  || productname.equals("") || listPrice.equals("") || retailprice.equals("") || marketPrice.equals("") || (stringUri== null) || pDescription.equals("")) {
                     Toast.makeText(Addproducts.this, "Please fill all the fields with valid values", Toast.LENGTH_SHORT).show();
 
 
                 } else {
 
-
+                    //add to db
                      Boolean addproduct = DB.insertproduct(productname,marketPrice,pDescription,listPrice,retailprice,stringUri,categoryidis);
 
                         if (addproduct == true) {

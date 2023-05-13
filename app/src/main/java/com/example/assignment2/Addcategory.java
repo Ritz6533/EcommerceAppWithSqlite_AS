@@ -38,7 +38,7 @@ public class Addcategory extends DialogFragment {
             @Override
             public void onClick(View v) {
 
-
+                //getting string for cateory
                 String newCategoryName = nameEditText.getText().toString();
                 Log.d("MSG", "Category name is "+newCategoryName);
 
@@ -48,6 +48,7 @@ public class Addcategory extends DialogFragment {
 
                 } else {
                 try{
+                    //adding to db
                     Boolean success = DB.insertcategory(newCategoryName);
                     if(success){
 
